@@ -22,21 +22,23 @@ public class GameTest {
         game.roll(0);
     }
 
+    private void rollMany(int pins) {
+        for (int i = 0; i < 20; i++) {
+            game.roll(pins);
+        }
+    }
+
     @DisplayName("한 번도 핀을 쓰러트리지 못하는 경우 0점을 반환한다.")
     @Test
     void gutterGame() throws Exception {
-        for (int i = 0; i < 20; i++) {
-            game.roll(0);
-        }
+        rollMany(0);
         assertThat(game.getScore()).isEqualTo(0);
     }
 
     @DisplayName("20번 공을 굴려 핀 20개를 쓰러트린 경우 20점을 반환한다.")
     @Test
     void allOnes() throws Exception {
-        for (int i = 0; i < 20; i++) {
-            game.roll(1);
-        }
+        rollMany(1);
         assertThat(game.getScore()).isEqualTo(20);
     }
 
