@@ -59,11 +59,15 @@ public class GameTest {
     @DisplayName("스트라이크의 경우 다음 2번의 roll 점수를 추가로 얻는다.")
     @Test
     void oneStrike() throws Exception {
-        game.roll(10);
+        rollStrike();
         game.roll(5);
         game.roll(3);
         rollMany(0, 16);
         assertThat(game.getScore()).isEqualTo(26);
+    }
+
+    private void rollStrike() {
+        game.roll(10);
     }
 
 }

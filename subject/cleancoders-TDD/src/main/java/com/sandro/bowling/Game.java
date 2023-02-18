@@ -12,27 +12,39 @@ public class Game {
 
     public int getScore() {
         int score = 0;
-        int i = 0;
+        int firstRollInFrame = 0;
         for (int frame = 0; frame < MAX_FRAME; frame++) {
-            if (isStrike(i)) {
-                score += 10 + rolls[i + 1] + rolls[i + 2];
-                i--;
-            } else if (isSpare(i)) {
-                    score += 10 + rolls[i + 2];
+            if (isStrike(firstRollInFrame)) {
+                score += 10 + nextTwoBallsForStrike(firstRollInFrame);
+                firstRollInFrame--;
+            } else if (isSpare(firstRollInFrame)) {
+                    score += 10 + nextBallForSpare(firstRollInFrame);
             } else {
-                score += rolls[i] + rolls[i + 1];
+                score += BallsForThisFrame(firstRollInFrame);
             }
-            i += 2;
+            firstRollInFrame += 2;
         }
         return score;
     }
 
-    private boolean isStrike(int i) {
-        return rolls[i] == 10;
+    private int nextBallForSpare(int firstRollInFrame) {
+        return rolls[firstRollInFrame + 2];
     }
 
-    private boolean isSpare(int i) {
-        return rolls[i] + rolls[i + 1] == 10;
+    private int nextTwoBallsForStrike(int firstRollInFrame) {
+        return rolls[firstRollInFrame + 1] + rolls[firstRollInFrame + 2];
+    }
+
+    private boolean isStrike(int firstRollInFrame) {
+        return rolls[firstRollInFrame] == 10;
+    }
+
+    private boolean isSpare(int firstRollInFrame) {
+        return BallsForThisFrame(firstRollInFrame) == 10;
+    }
+
+    private int BallsForThisFrame(int firstRollInFrame) {
+        return rolls[firstRollInFrame] + rolls[firstRollInFrame + 1];
     }
 
 }
