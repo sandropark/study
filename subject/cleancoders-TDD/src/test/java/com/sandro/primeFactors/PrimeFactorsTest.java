@@ -19,6 +19,7 @@ class PrimeFactorsTest {
         assertPrimeFactors(6, list(2, 3));
         assertPrimeFactors(7, list(7));
         assertPrimeFactors(8, list(2, 2, 2));
+        assertPrimeFactors(9, list(3, 3));
     }
 
     private List<Integer> of(int n) {
@@ -27,6 +28,10 @@ class PrimeFactorsTest {
             while (n % 2 == 0) {
                 factors.add(2);
                 n /= 2;
+            }
+            while (n % 3 == 0) {
+                factors.add(3);
+                n /= 3;
             }
         }
         if (n > 1)
