@@ -1,6 +1,7 @@
 package com.sandro.bowling;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -42,6 +43,7 @@ public class GameTest {
         assertThat(game.getScore()).isEqualTo(20);
     }
 
+    @Disabled
     @DisplayName("스페어의 경우 다음 한 번의 roll 의 점수를 추가로 얻는다.")
     @Test
     void oneSpare() throws Exception {

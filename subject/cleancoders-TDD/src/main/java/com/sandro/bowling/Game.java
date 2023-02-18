@@ -1,50 +1,21 @@
 package com.sandro.bowling;
 
 public class Game {
-    private int score;
-    private int rollCount;
-    private int bonusCount;
-    private int currentScore;
+    public static final int MAX_FRAME = 10;
+    private static final int MAX_ROLL = 21;
+    private final int[] rolls = new int[MAX_ROLL];
+    private int currentRoll;
+
+    public void roll(int pins) {
+        rolls[currentRoll++] = pins;
+    }
 
     public int getScore() {
+        int score = 0;
+        for (int frame = 0; frame < MAX_FRAME; frame++) {
+            score += rolls[frame * 2] + rolls[frame * 2 + 1];
+        }
         return score;
-    }
-
-    /**
-     * 공 굴리기
-     * @param pins 쓰러트린 핀 수
-     */
-    public void roll(int pins) {
-        checkBonus(pins);
-
-        initRollCountAndCurrentScore();
-
-        score += pins;
-        currentScore += pins;
-
-        rollCount--;
-
-        isSpare();
-    }
-
-    private void checkBonus(int pins) {
-        if (bonusCount > 0) {
-            score += pins;
-            bonusCount--;
-        }
-    }
-
-    private void initRollCountAndCurrentScore() {
-        if (rollCount == 0) {
-            rollCount = 2;
-            currentScore = 0;
-        }
-    }
-
-    private void isSpare() {
-        if (rollCount == 0 & currentScore == 10) {
-            bonusCount = 1;
-        }
     }
 
 }
