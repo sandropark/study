@@ -11,14 +11,20 @@ class WrapperTest {
         assertWraps(null, 1, "");
         assertWraps("", 1, "");
         assertWraps("x", 1, "x");
+        assertWraps("xx", 1, "x\nx");
+    }
+
+    private String wrap(String s, int length) {
+        if (s == null) return "";
+
+        if (s.length() <= length)
+            return s;
+        else
+            return s.substring(0, length) + "\n" + s.substring(length);
     }
 
     private void assertWraps(String s, int length, String expected) {
         assertThat(wrap(s, length)).isEqualTo(expected);
-    }
-
-    private String wrap(String s, int length) {
-        return s == null ? "" : s;
     }
 
 }
