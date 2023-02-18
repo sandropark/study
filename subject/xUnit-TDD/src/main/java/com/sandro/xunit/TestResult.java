@@ -1,8 +1,14 @@
 package com.sandro.xunit;
 
 public class TestResult {
+    private int runCount;
+
     public String getSummary() {
-        return "1 run, 0 failed";
+        return runCount + " run, 0 failed";
+    }
+
+    public void testStarted() {
+        runCount++;
     }
 
 }

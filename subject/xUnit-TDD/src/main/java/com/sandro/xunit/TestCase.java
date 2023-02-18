@@ -11,6 +11,8 @@ public abstract class TestCase {
     }
 
     public TestResult run() {
+        TestResult result = new TestResult();
+        result.testStarted();
         setUp();
 
         try {
@@ -21,7 +23,7 @@ public abstract class TestCase {
         }
 
         tearDown();
-        return new TestResult();
+        return result;
     }
 
     protected void setUp() {}
