@@ -9,10 +9,12 @@ class WrapperTest {
     @Test
     void test() throws Exception {
         assertThat(wrap(null, 1)).isEqualTo("");
+        assertThat(wrap("", 1)).isEqualTo("");
+        assertThat(wrap("x", 1)).isEqualTo("x");
     }
 
     private String wrap(String s, int length) {
-        return "";
+        return s == null ? "" : s;
     }
 
 }
