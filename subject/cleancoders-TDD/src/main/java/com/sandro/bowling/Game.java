@@ -13,9 +13,17 @@ public class Game {
     public int getScore() {
         int score = 0;
         for (int frame = 0; frame < MAX_FRAME; frame++) {
-            score += rolls[frame * 2] + rolls[frame * 2 + 1];
+            int currentScore = rolls[frame * 2] + rolls[frame * 2 + 1];
+            score += currentScore;
+            if (isSpare(currentScore)) {
+                score += rolls[frame * 2 + 2];
+            }
         }
         return score;
+    }
+
+    private static boolean isSpare(int currentScore) {
+        return currentScore == 10;
     }
 
 }
