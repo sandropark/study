@@ -22,8 +22,8 @@ public class GameTest {
         game.roll(0);
     }
 
-    private void rollMany(int pins, int frames) {
-        for (int i = 0; i < frames; i++) {
+    private void rollMany(int pins, int rolls) {
+        for (int i = 0; i < rolls; i++) {
             game.roll(pins);
         }
     }
@@ -47,13 +47,23 @@ public class GameTest {
         game.roll(5);
     }
 
-    @DisplayName("스페어의 경우 다음 한 번의 roll 의 점수를 추가로 얻는다.")
+    @DisplayName("스페어의 경우 다음 한 번의 roll 점수를 추가로 얻는다.")
     @Test
     void oneSpare() throws Exception {
         rollSpare();
         game.roll(3);
         rollMany(0, 17);
         assertThat(game.getScore()).isEqualTo(16);
+    }
+
+    @DisplayName("스트라이크의 경우 다음 2번의 roll 점수를 추가로 얻는다.")
+    @Test
+    void oneStrike() throws Exception {
+        game.roll(10);
+        game.roll(5);
+        game.roll(3);
+        rollMany(0, 16);
+        assertThat(game.getScore()).isEqualTo(26);
     }
 
 }
