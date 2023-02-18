@@ -13,6 +13,7 @@ class WrapperTest {
         assertWraps("x", 1, "x");
         assertWraps("xx", 1, "x\nx");
         assertWraps("xxx", 1, "x\nx\nx");
+        assertWraps("x x", 1, "x\nx");
     }
 
     private String wrap(String s, int length) {
@@ -21,7 +22,7 @@ class WrapperTest {
         if (s.length() <= length)
             return s;
         else
-            return s.substring(0, length) + "\n" + wrap(s.substring(length), length);
+            return s.substring(0, length) + "\n" + wrap(s.substring(length).trim(), length);
     }
 
     private void assertWraps(String s, int length, String expected) {
