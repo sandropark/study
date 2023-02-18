@@ -8,9 +8,13 @@ class WrapperTest {
 
     @Test
     void test() throws Exception {
-        assertThat(wrap(null, 1)).isEqualTo("");
-        assertThat(wrap("", 1)).isEqualTo("");
-        assertThat(wrap("x", 1)).isEqualTo("x");
+        assertWraps(null, 1, "");
+        assertWraps("", 1, "");
+        assertWraps("x", 1, "x");
+    }
+
+    private void assertWraps(String s, int length, String expected) {
+        assertThat(wrap(s, length)).isEqualTo(expected);
     }
 
     private String wrap(String s, int length) {
