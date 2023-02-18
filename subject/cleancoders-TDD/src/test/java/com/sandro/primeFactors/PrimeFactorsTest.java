@@ -20,22 +20,15 @@ class PrimeFactorsTest {
         assertPrimeFactors(7, list(7));
         assertPrimeFactors(8, list(2, 2, 2));
         assertPrimeFactors(9, list(3, 3));
+        assertPrimeFactors(2 * 2 * 3 * 5 * 7 * 11 * 13, list(2, 2, 3, 5, 7, 11, 13));
     }
 
     private List<Integer> of(int n) {
         List<Integer> factors = new ArrayList<>();
-        if (n > 1) {
-            while (n % 2 == 0) {
-                factors.add(2);
-                n /= 2;
-            }
-            while (n % 3 == 0) {
-                factors.add(3);
-                n /= 3;
-            }
-        }
-        if (n > 1)
-            factors.add(n);
+        int divider = 2;
+        for (; n > 1; divider++)
+            for (; n % divider == 0; n /= divider)
+                factors.add(divider);
         return factors;
     }
 
