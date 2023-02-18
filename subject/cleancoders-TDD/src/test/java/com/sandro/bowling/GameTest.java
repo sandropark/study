@@ -70,4 +70,15 @@ public class GameTest {
         game.roll(10);
     }
 
+    @DisplayName("퍼펙트게임의 점수는 300이다.")
+    @Test
+    void perfectGame() throws Exception {
+        rollPerfect();
+        assertThat(game.getScore()).isEqualTo(300);
+    }
+
+    private void rollPerfect() {
+        rollMany(10, 12);
+    }
+
 }
