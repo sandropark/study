@@ -23,3 +23,8 @@
 메서드 명과 실제 메서드의 동작에 괴리가 생기기 시작하는 것을 파악하고 구조를 변경했다.
 
 이런식으로 아주 간단한 기능부터 구현하면서 구조를 잡아가는 방법을 많이 훈련해야겠다.
+
+
+## Prime factor and wordwrap
+
+- [클린 코더스 강의 9. TDD 4 - primefactors and wordwrap](https://youtu.be/X4JtF2BfA0U?list=PLeQ0NTYUDTmMM71Jn1scbEYdLFHz5ZqFA)
