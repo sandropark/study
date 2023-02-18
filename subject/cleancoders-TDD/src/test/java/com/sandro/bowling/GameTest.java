@@ -1,4 +1,4 @@
-package com.sandro.bowlling;
+package com.sandro.bowling;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,8 +22,8 @@ public class GameTest {
         game.roll(0);
     }
 
-    private void rollMany(int pins) {
-        for (int i = 0; i < 20; i++) {
+    private void rollMany(int pins, int frames) {
+        for (int i = 0; i < frames; i++) {
             game.roll(pins);
         }
     }
@@ -31,15 +31,25 @@ public class GameTest {
     @DisplayName("한 번도 핀을 쓰러트리지 못하는 경우 0점을 반환한다.")
     @Test
     void gutterGame() throws Exception {
-        rollMany(0);
+        rollMany(0, 20);
         assertThat(game.getScore()).isEqualTo(0);
     }
 
     @DisplayName("20번 공을 굴려 핀 20개를 쓰러트린 경우 20점을 반환한다.")
     @Test
     void allOnes() throws Exception {
-        rollMany(1);
+        rollMany(1, 20);
         assertThat(game.getScore()).isEqualTo(20);
+    }
+
+    @DisplayName("스페어의 경우 다음 한 번의 roll 의 점수를 추가로 얻는다.")
+    @Test
+    void oneSpare() throws Exception {
+        game.roll(5);
+        game.roll(5);
+        game.roll(3);
+        rollMany(0, 17);
+        assertThat(game.getScore()).isEqualTo(16);
     }
 
 }
