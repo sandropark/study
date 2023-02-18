@@ -3,7 +3,7 @@ package com.sandro.xunit;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class TestCase {
+public abstract class TestCase {
     protected final String name;
 
     public TestCase(String name) {
@@ -19,8 +19,11 @@ public class TestCase {
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
+
+        tearDown();
     }
 
-    protected void setUp() {
-    }
+    protected void setUp() {}
+
+    protected void tearDown() {}
 }
