@@ -11,11 +11,16 @@ public class NameInverterTest {
         assertThat(invert(null)).isEqualTo("");
         assertThat(invert("")).isEqualTo("");
         assertThat(invert("name")).isEqualTo("name");
+        assertThat(invert("first last")).isEqualTo("last, first");
     }
 
     private String invert(String name) {
         if (name == null || name.equals("")) {
             return "";
+        }
+        String[] names = name.split(" ");
+        if (names.length > 1) {
+            return String.format("%s, %s", names[1], names[0]);
         }
         return name;
     }
