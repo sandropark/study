@@ -1,4 +1,4 @@
-# TOO로 xUnit 만들기
+# TDD로 xUnit 만들기
 
 - [토비 - xUnit 테스팅 프레임워크를 TDD로 만들어보자](https://youtu.be/tdKFZcZSJmg)
 
