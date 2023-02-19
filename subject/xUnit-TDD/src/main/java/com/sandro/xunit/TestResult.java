@@ -2,9 +2,10 @@ package com.sandro.xunit;
 
 public class TestResult {
     private int runCount;
+    private int failCount;
 
     public String getSummary() {
-        return runCount + " run, 0 failed";
+        return runCount + " run, " + failCount + " failed";
     }
 
     public void testStarted() {
@@ -12,6 +13,6 @@ public class TestResult {
     }
 
     public void testFailed() {
-
+        failCount++;
     }
 }
