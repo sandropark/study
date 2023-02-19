@@ -12,6 +12,6 @@ public class NameInverterTest {
     }
 
     private String invert(String name) {
-        return null;
+        return "";
     }
 }
