@@ -11,4 +11,7 @@ public class TestResult {
         runCount++;
     }
 
+    public void testFailed() {
+
+    }
 }
