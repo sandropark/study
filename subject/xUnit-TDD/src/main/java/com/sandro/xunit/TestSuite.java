@@ -9,7 +9,7 @@ public class TestSuite implements Test {
 
     public TestSuite(Class<? extends TestCase> testClass) {
         Arrays.stream(testClass.getMethods())
-                .filter(m -> m.getName().startsWith("test"))
+                .filter(m -> m.getAnnotation(com.sandro.xunit.annotation.Test.class) != null)
                 .forEach(m -> {
                     try {
                         add(testClass.getConstructor(String.class).newInstance(m.getName()));
