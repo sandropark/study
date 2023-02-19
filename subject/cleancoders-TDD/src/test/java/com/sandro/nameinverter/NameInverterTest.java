@@ -14,6 +14,9 @@ public class NameInverterTest {
     }
 
     private String invert(String name) {
-        return "";
+        if (name == null || name.equals("")) {
+            return "";
+        }
+        return name;
     }
 }
