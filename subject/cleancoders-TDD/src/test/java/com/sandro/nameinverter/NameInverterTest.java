@@ -9,6 +9,8 @@ public class NameInverterTest {
     @Test
     void name() throws Exception {
         assertThat(invert(null)).isEqualTo("");
+        assertThat(invert("")).isEqualTo("");
+        assertThat(invert("name")).isEqualTo("name");
     }
 
     private String invert(String name) {
