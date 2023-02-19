@@ -30,4 +30,12 @@ public class TestCaseTest extends TestCase {
         Assert.assertEquals("1 run, 1 failed", result.getSummary());
     }
 
+    public void testSuite() {
+        TestSuite suite = new TestSuite();
+        suite.add(new WasRun("testMethod"));
+        suite.add(new WasRun("testBrokenMethod"));
+        TestResult result = suite.run();
+        Assert.assertEquals("2 run, 1 failed", result.getSummary());
+    }
+
 }
