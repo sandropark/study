@@ -28,3 +28,10 @@
 ## Prime factor and wordwrap
 
 - [클린 코더스 강의 9. TDD 4 - primefactors and wordwrap](https://youtu.be/X4JtF2BfA0U?list=PLeQ0NTYUDTmMM71Jn1scbEYdLFHz5ZqFA)
+
+## name inverter
+
+- [클린 코더스 강의 16.1 advanced tdd 1 - name inverter](https://youtu.be/czjWpmy3rkM?list=PLeQ0NTYUDTmMM71Jn1scbEYdLFHz5ZqFA)
+
+first name과 last name을 입력받아 뒤집어서 반환하는 메서드를 구현한다.
+
