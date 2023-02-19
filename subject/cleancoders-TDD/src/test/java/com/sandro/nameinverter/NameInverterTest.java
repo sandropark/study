@@ -13,13 +13,14 @@ public class NameInverterTest {
         assertThat(invert("name")).isEqualTo("name");
         assertThat(invert("first last")).isEqualTo("last, first");
         assertThat(invert("   name   ")).isEqualTo("name");
+        assertThat(invert("first     last")).isEqualTo("last, first");
     }
 
     private String invert(String name) {
         if (name == null || name.equals("")) {
             return "";
         }
-        String[] names = name.trim().split(" ");
+        String[] names = name.trim().split("\\s+");
         if (names.length > 1) {
             return String.format("%s, %s", names[1], names[0]);
         }
