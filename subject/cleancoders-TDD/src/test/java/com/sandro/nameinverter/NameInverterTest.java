@@ -20,6 +20,7 @@ public class NameInverterTest {
         assertThat(invert("first     last")).isEqualTo("last, first");
         assertThat(invert("Mr. first last")).isEqualTo("last, first");
         assertThat(invert("Mrs. first last")).isEqualTo("last, first");
+        assertThat(invert("first last SR.")).isEqualTo("last, first SR.");
     }
 
     private String invert(String name) {
@@ -31,7 +32,11 @@ public class NameInverterTest {
             return names.get(0);
         }
         removeHonorific(names);
-        return String.format("%s, %s", names.get(1), names.get(0));
+        String postNominal = "";
+        if (names.size() == 3) {
+            postNominal = names.get(2);
+        }
+        return String.format("%s, %s %s", names.get(1), names.get(0), postNominal).trim();
     }
 
     private void removeHonorific(List<String> names) {
