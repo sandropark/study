@@ -1,12 +1,11 @@
 package com.sandro.xunit;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public abstract class TestCase {
     protected final String name;
 
-    public TestCase(String name) {
+    protected TestCase(String name) {
         this.name = name;
     }
 
@@ -18,8 +17,8 @@ public abstract class TestCase {
         try {
             Method method = getClass().getMethod(name);
             method.invoke(this);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            result.testFailed();
         }
 
         tearDown();
