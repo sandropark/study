@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestSuite {
-    private final List<WasRun> tests = new ArrayList<>();
+    private final List<TestCase> tests = new ArrayList<>();
 
-    public void add(WasRun test) {
+    public void add(TestCase test) {
         tests.add(test);
     }
 
