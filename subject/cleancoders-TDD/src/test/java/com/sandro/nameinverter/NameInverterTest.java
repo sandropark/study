@@ -19,6 +19,7 @@ public class NameInverterTest {
         assertThat(invert("   name   ")).isEqualTo("name");
         assertThat(invert("first     last")).isEqualTo("last, first");
         assertThat(invert("Mr. first last")).isEqualTo("last, first");
+        assertThat(invert("Mrs. first last")).isEqualTo("last, first");
     }
 
     private String invert(String name) {
@@ -27,7 +28,7 @@ public class NameInverterTest {
         }
         List<String> names = new ArrayList<>(Arrays.asList(name.trim().split("\\s+")));
         if (names.size() > 1) {
-            if (names.get(0).equals("Mr.")) {
+            if (names.get(0).equals("Mr.") || names.get(0).equals("Mrs.")) {
                 names.remove(0);
             }
             return String.format("%s, %s", names.get(1), names.get(0));
