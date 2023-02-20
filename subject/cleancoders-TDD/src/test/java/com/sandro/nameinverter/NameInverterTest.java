@@ -25,29 +25,33 @@ public class NameInverterTest {
     }
 
     private String invert(String name) {
-        if (name == null || name.equals("")) {
-            return "";
-        }
-        List<String> names = splitNames(name);
-        if (names.size() == 1) {
-            return names.get(0);
-        }
-        removeHonorific(names);
-
-        return String.format("%s, %s %s", names.get(1), names.get(0), String.join(" ", names.subList(2, names.size()))).trim();
+        if (isEmpty(name)) return "";
+        return formatName(removeHonorific(splitNames(name)));
     }
 
-    private void removeHonorific(List<String> names) {
-        if (isHonorific(names)) {
-            names.remove(0);
-        }
+    private boolean isEmpty(String name) {
+        return name == null || name.equals("");
     }
 
     private ArrayList<String> splitNames(String name) {
         return new ArrayList<>(Arrays.asList(name.trim().split("\\s+")));
     }
 
+    private List<String> removeHonorific(List<String> names) {
+        if (isHonorific(names)) names.remove(0);
+        return names;
+    }
+
     private boolean isHonorific(List<String> names) {
         return names.get(0).matches("Mr\\.|Mrs\\.");
+    }
+
+    private String formatName(List<String> names) {
+        if (names.size() == 1) return names.get(0);
+        return String.format("%s, %s %s", names.get(1), names.get(0), postNominal(names)).trim();
+    }
+
+    private String postNominal(List<String> names) {
+        return String.join(" ", names.subList(2, names.size()));
     }
 }
