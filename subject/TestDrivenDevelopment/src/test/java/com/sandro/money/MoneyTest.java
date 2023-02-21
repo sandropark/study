@@ -98,4 +98,17 @@ public class MoneyTest {
         Money result = bank.reduce(sum, "USD");
         assertEquals(Money.dollar(15), result);
     }
+
+    @DisplayName("두 수를 더한 다음 곱한다.")
+    @Test
+    void sumTimes() throws Exception {
+        Money fiveBucks = Money.dollar(5);
+        Money tenFrancs = Money.franc(10);
+        Bank bank = new Bank();
+        bank.addRate("CHF", "USD", 2);
+        Expression sum = new Sum(fiveBucks, tenFrancs).times(2);
+        Money result = bank.reduce(sum, "USD");
+        assertEquals(Money.dollar(20), result);
+    }
+
 }
