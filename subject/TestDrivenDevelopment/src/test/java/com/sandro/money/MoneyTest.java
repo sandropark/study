@@ -1,5 +1,6 @@
 package com.sandro.money;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -57,5 +58,13 @@ public class MoneyTest {
         Bank bank = new Bank();
         Money result = bank.reduce(sum, "USD");
         assertEquals(Money.dollar(7), result);
+    }
+
+    @DisplayName("Bank.reduce에 Money를 넣으면 아무런 변화가 없다.")
+    @Test
+    void reduceMoney() throws Exception {
+        Bank bank = new Bank();
+        Money result = bank.reduce(Money.dollar(1), "USD");
+        assertEquals(Money.dollar(1), result);
     }
 }
