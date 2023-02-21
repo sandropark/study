@@ -1,12 +1,13 @@
 package com.sandro.money;
 
 public class Dollar {
-    public int amount = 10;
+    public int amount;
 
-    public Dollar(int i) {
+    public Dollar(int amount) {
+        this.amount = amount;
     }
 
-    public void times(int i) {
-
+    public void times(int multiplier) {
+        amount *= multiplier;
     }
 }
