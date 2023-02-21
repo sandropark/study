@@ -30,4 +30,8 @@ public class Money {
         Money money = (Money) obj;
         return amount == money.amount && currency().equals(money.currency);
     }
+
+    public Money plus(Money money) {
+        return null;
+    }
 }
