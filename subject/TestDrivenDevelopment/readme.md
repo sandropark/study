@@ -4,7 +4,7 @@
 
 ## TODO
 * [ ] $5 + 10CHF = $10(환율이 2:1인 경우)
-* [ ] $5 + $5 = %10
+* [x] $5 + $5 = $10
 * [x] $5 x 2 = $10
 * [x] amount를 private로 만들기
 * [x] Dollar 부작용(side effect?)

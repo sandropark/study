@@ -31,7 +31,7 @@ public class Money {
         return amount == money.amount && currency().equals(money.currency);
     }
 
-    public Money plus(Money money) {
-        return null;
+    public Money plus(Money addend) {
+        return new Money(amount + addend.amount, currency);
     }
 }
