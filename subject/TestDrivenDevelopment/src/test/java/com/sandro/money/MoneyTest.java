@@ -13,4 +13,9 @@ public class MoneyTest {
         product = five.times(3);
         assertEquals(15, product.amount);
     }
+
+    @Test
+    void equality() throws Exception {
+        assertEquals(new Dollar(5), new Dollar(5));
+    }
 }
