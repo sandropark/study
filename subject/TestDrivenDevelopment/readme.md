@@ -8,5 +8,5 @@
 * [ ] amount를 private로 만들기
 * [x] Dollar 부작용(side effect?)
 * [ ] Money 반올림?
-* [ ] equals()
+* [x] equals()
 * [ ] hashCode()
