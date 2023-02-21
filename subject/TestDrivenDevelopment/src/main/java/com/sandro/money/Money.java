@@ -1,6 +1,6 @@
 package com.sandro.money;
 
-public class Money {
+public class Money implements Expression {
     protected int amount;
     protected String currency;
 
@@ -31,7 +31,7 @@ public class Money {
         return amount == money.amount && currency().equals(money.currency);
     }
 
-    public Money plus(Money addend) {
+    public Expression plus(Money addend) {
         return new Money(amount + addend.amount, currency);
     }
 }
