@@ -3,6 +3,7 @@ package com.sandro.money;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class MoneyTest {
     @Test
@@ -17,5 +18,6 @@ public class MoneyTest {
     @Test
     void equality() throws Exception {
         assertEquals(new Dollar(5), new Dollar(5));
+        assertNotEquals(new Dollar(5), new Dollar(6));
     }
 }
