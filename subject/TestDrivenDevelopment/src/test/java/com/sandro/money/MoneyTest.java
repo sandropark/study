@@ -1,5 +1,6 @@
 package com.sandro.money;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -7,25 +8,34 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class MoneyTest {
+
+    private final Money fiveBucks = Money.dollar(5);
+    private final Money fiveFrancs = Money.franc(5);
+    private final Money tenFrancs = Money.franc(10);
+    private final Bank bank = new Bank();
+
+    @BeforeEach
+    void setUp() {
+        bank.addRate("CHF", "USD", 2);
+    }
+
     @Test
     void multiplication() throws Exception {
-        Money five = Money.dollar(5);
-        assertEquals(Money.dollar(10), five.times(2));
-        assertEquals(Money.dollar(15), five.times(3));
+        assertEquals(Money.dollar(10), fiveBucks.times(2));
+        assertEquals(Money.dollar(15), fiveBucks.times(3));
     }
 
     @Test
     void equality() throws Exception {
-        assertEquals(Money.dollar(5), Money.dollar(5));
-        assertNotEquals(Money.dollar(5), Money.dollar(6));
-        assertNotEquals(Money.franc(5), Money.dollar(5));
+        assertEquals(fiveBucks, Money.dollar(5));
+        assertNotEquals(fiveBucks, Money.dollar(6));
+        assertNotEquals(fiveFrancs, fiveBucks);
     }
 
     @Test
     void francMultiplication() throws Exception {
-        Money five = Money.franc(5);
-        assertEquals(Money.franc(10), five.times(2));
-        assertEquals(Money.franc(15), five.times(3));
+        assertEquals(Money.franc(10), fiveFrancs.times(2));
+        assertEquals(Money.franc(15), fiveFrancs.times(3));
     }
 
     @Test
@@ -36,8 +46,7 @@ public class MoneyTest {
 
     @Test
     void simpleAddition() throws Exception {
-        Money five = Money.dollar(5);
-        Expression sum = five.plus(five);
+        Expression sum = fiveBucks.plus(fiveBucks);
         Bank bank = new Bank();
         Money reduced = bank.reduce(sum, "USD");
         assertEquals(Money.dollar(10), reduced);
@@ -45,25 +54,22 @@ public class MoneyTest {
 
     @Test
     void plusReturnsSum() throws Exception {
-        Money five = Money.dollar(5);
-        Expression result = five.plus(five);
+        Expression result = fiveBucks.plus(fiveBucks);
         Sum sum = (Sum) result;
-        assertEquals(five, sum.augend);
-        assertEquals(five, sum.addend);
+        assertEquals(fiveBucks, sum.augend);
+        assertEquals(fiveBucks, sum.addend);
     }
 
     @Test
     void reduceSum() throws Exception {
         Expression sum = new Sum(Money.dollar(3), Money.dollar(4));
-        Bank bank = new Bank();
         Money result = bank.reduce(sum, "USD");
         assertEquals(Money.dollar(7), result);
     }
 
-    @DisplayName("Bank.reduce에 Money를 넣으면 아무런 변화가 없다.")
+    @DisplayName("달러를 달러로 변환하는 경우 그대로다.")
     @Test
     void reduceMoney() throws Exception {
-        Bank bank = new Bank();
         Money result = bank.reduce(Money.dollar(1), "USD");
         assertEquals(Money.dollar(1), result);
     }
@@ -71,8 +77,6 @@ public class MoneyTest {
     @DisplayName("CHF 2 : USD 1 - 2프랑은 1달러이다.")
     @Test
     void reduceMoneyDifferentCurrency() throws Exception {
-        Bank bank = new Bank();
-        bank.addRate("CHF", "USD", 2);
         Money result = bank.reduce(Money.franc(2), "USD");
         assertEquals(Money.dollar(1), result);
     }
@@ -80,20 +84,12 @@ public class MoneyTest {
     @DisplayName("다른 두 화폐를 더하면 환율이 적용되어 계산된다.")
     @Test
     void mixedAddition() throws Exception {
-        Expression fiveBucks = Money.dollar(5);
-        Expression tenFrancs = Money.franc(10);
-        Bank bank = new Bank();
-        bank.addRate("CHF", "USD", 2);
         Money result = bank.reduce(fiveBucks.plus(tenFrancs), "USD");
         assertEquals(Money.dollar(10), result);
     }
 
     @Test
     void sumPlusMoney() throws Exception {
-        Money fiveBucks = Money.dollar(5);
-        Money tenFrancs = Money.franc(10);
-        Bank bank = new Bank();
-        bank.addRate("CHF", "USD", 2);
         Expression sum = new Sum(fiveBucks, tenFrancs).plus(fiveBucks);
         Money result = bank.reduce(sum, "USD");
         assertEquals(Money.dollar(15), result);
@@ -102,10 +98,6 @@ public class MoneyTest {
     @DisplayName("두 수를 더한 다음 곱한다.")
     @Test
     void sumTimes() throws Exception {
-        Money fiveBucks = Money.dollar(5);
-        Money tenFrancs = Money.franc(10);
-        Bank bank = new Bank();
-        bank.addRate("CHF", "USD", 2);
         Expression sum = new Sum(fiveBucks, tenFrancs).times(2);
         Money result = bank.reduce(sum, "USD");
         assertEquals(Money.dollar(20), result);
