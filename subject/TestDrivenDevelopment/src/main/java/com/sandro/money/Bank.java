@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 public class Bank {
 
-    private Hashtable rates = new Hashtable();
+    private final Hashtable<Pair, Integer> rates = new Hashtable<>();
 
     private class Pair {
         private String from;
@@ -37,7 +37,6 @@ public class Bank {
 
     public int rate(String from, String to) {
         if (from.equals(to)) return 1;
-        Integer rate = (Integer) rates.get(new Pair(from, to));
-        return rate;
+        return rates.get(new Pair(from, to));
     }
 }
