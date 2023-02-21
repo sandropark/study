@@ -2,9 +2,13 @@ package com.sandro.money;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class MoneyTest {
     @Test
-    void test() throws Exception {
-
+    void multiplication() throws Exception {
+        Dollar five = new Dollar(5);
+        five.times(2);
+        assertEquals(10, five.amount);
     }
 }
