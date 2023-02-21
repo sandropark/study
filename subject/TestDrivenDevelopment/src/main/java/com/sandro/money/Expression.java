@@ -3,7 +3,9 @@ package com.sandro.money;
 public interface Expression {
     Money reduce(Bank bank, String to);
 
-    Expression plus(Expression addend);
+    default Expression plus(Expression addend) {
+        return new Sum(this, addend);
+    }
 
     Expression times(int multiplier);
 }
