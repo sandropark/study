@@ -76,4 +76,15 @@ public class MoneyTest {
         Money result = bank.reduce(Money.franc(2), "USD");
         assertEquals(Money.dollar(1), result);
     }
+
+    @DisplayName("다른 두 화폐를 더하면 환율이 적용되어 계산된다.")
+    @Test
+    void mixedAddition() throws Exception {
+        Money fiveBucks = Money.dollar(5);
+        Money tenFrancs = Money.franc(10);
+        Bank bank = new Bank();
+        bank.addRate("CHF", "USD", 2);
+        Money result = bank.reduce(fiveBucks.plus(tenFrancs), "USD");
+        assertEquals(Money.dollar(10), result);
+    }
 }
