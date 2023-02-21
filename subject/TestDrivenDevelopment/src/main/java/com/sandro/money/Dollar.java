@@ -1,7 +1,7 @@
 package com.sandro.money;
 
 public class Dollar {
-    public int amount;
+    public int amount = 10;
 
     public Dollar(int i) {
     }
