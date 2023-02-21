@@ -9,3 +9,4 @@
 * [x] Dollar 부작용(side effect?)
 * [ ] Money 반올림?
 * [ ] equals()
+* [ ] hashCode()
