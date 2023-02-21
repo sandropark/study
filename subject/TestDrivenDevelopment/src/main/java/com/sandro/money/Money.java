@@ -11,11 +11,13 @@ public abstract class Money {
         return new Franc(amount);
     }
 
+    public abstract Money times(int multiplier);
+
+    public abstract String currency();
+
     @Override
     public boolean equals(Object obj) {
         Money money = (Money) obj;
         return amount == money.amount && getClass().equals(obj.getClass());
     }
-
-    public abstract Money times(int multiplier);
 }
