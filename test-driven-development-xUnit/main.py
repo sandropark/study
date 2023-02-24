@@ -89,19 +89,21 @@ class TestCaseTest(TestCase):
         assert self.result.summary() == "1 run, 1 failed"
 
     def test_suite(self):
-        suite = TestSuite()
-        suite.add(WasRun("test_method"))
-        suite.add(WasRun("test_broken_method"))
-        suite.run(self.result)
+        self.suite = TestSuite()
+        self.suite.add(WasRun("test_method"))
+        self.suite.add(WasRun("test_broken_method"))
+        self.suite.run(self.result)
         assert self.result.summary() == "2 run, 1 failed"
 
 
 result = TestResult()
+suite = TestSuite()
 
-TestCaseTest("test_template_method").run(result)
-TestCaseTest("test_result").run(result)
-TestCaseTest("test_failed_result_formatting").run(result)
-TestCaseTest("test_failed_result").run(result)
-TestCaseTest("test_suite").run(result)
+suite.add(TestCaseTest("test_template_method"))
+suite.add(TestCaseTest("test_result"))
+suite.add(TestCaseTest("test_failed_result_formatting"))
+suite.add(TestCaseTest("test_failed_result"))
+suite.add(TestCaseTest("test_suite"))
 
+suite.run(result)
 print(result.summary())
