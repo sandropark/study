@@ -1,14 +1,19 @@
-class WasRun:
-    def __init__(self, name):
-        self.was_run = None
+class TestCase:
+    def __init__(self, name) -> None:
         self.name = name
 
-    def test_method(self):
-        self.was_run = 1
-
-    def run(self):
+    def run(self) -> None:
         method = getattr(self, self.name)
         method()
+
+
+class WasRun(TestCase):
+    def __init__(self, name) -> None:
+        self.was_run = None
+        TestCase.__init__(self, name)
+
+    def test_method(self) -> None:
+        self.was_run = 1
 
 
 test = WasRun("test_method")
