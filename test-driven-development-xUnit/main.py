@@ -28,7 +28,7 @@ class TestCaseTest(TestCase):
     def test_template_method(self):
         self.test = WasRun("test_method")
         self.test.run()
-        assert self.test.log == "set_up test_method "
+        assert self.test.log == "set_up test_method tear_down"
 
 
 TestCaseTest("test_template_method").run()
