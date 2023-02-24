@@ -8,6 +8,9 @@ class TestResult:
     def summary(self) -> str:
         return f'{self.run_count} run, 0 failed'
 
+    def test_failed(self):
+        pass
+
 
 class TestCase:
     def __init__(self, name):
@@ -54,6 +57,13 @@ class TestCaseTest(TestCase):
         result = test.run()
         assert result.summary() == "1 run, 0 failed"
 
+    def test_failed_result_formatting(self):
+        result = TestResult()
+        result.test_started()
+        result.test_failed()
+        assert result.summary() == "1 run, 1 failed"
+
 
 TestCaseTest("test_template_method").run()
 TestCaseTest("test_result").run()
+TestCaseTest("test_failed_result_formatting").run()
