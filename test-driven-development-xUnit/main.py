@@ -1,12 +1,18 @@
+class TestResult:
+    def summary(self):
+        pass
+
+
 class TestCase:
     def __init__(self, name):
         self.name = name
 
-    def run(self):
+    def run(self) -> TestResult:
         self.set_up()
         method = getattr(self, self.name)
         method()
         self.tear_down()
+        return TestResult()
 
     def set_up(self): pass
     def tear_down(self): pass
@@ -34,5 +40,11 @@ class TestCaseTest(TestCase):
         self.test.run()
         assert self.test.log == "set_up test_method tear_down"
 
+    def test_result(self):
+        test = WasRun("test_method")
+        result = test.run()
+        assert result.summary() == "1 run, 0 failed"
+
 
 TestCaseTest("test_template_method").run()
+TestCaseTest("test_result").run()
