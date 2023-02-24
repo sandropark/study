@@ -22,8 +22,11 @@ class TestCase:
         result.test_started()
 
         self.set_up()
-        method = getattr(self, self.name)
-        method()
+        try:
+            method = getattr(self, self.name)
+            method()
+        except:
+            result.test_failed()
         self.tear_down()
         return result
 
@@ -52,9 +55,9 @@ class WasRun(TestCase):
 class TestCaseTest(TestCase):
 
     def test_template_method(self):
-        self.test = WasRun("test_method")
-        self.test.run()
-        assert self.test.log == "set_up test_method tear_down"
+        test = WasRun("test_method")
+        test.run()
+        assert test.log == "set_up test_method tear_down"
 
     def test_result(self):
         test = WasRun("test_method")
