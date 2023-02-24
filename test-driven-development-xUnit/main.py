@@ -14,14 +14,13 @@ class TestCase:
 class WasRun(TestCase):
     def __init__(self, name):
         self.log = None
-        self.was_run = None
         TestCase.__init__(self, name)
 
     def set_up(self):
         self.log = "set_up "
 
     def test_method(self):
-        self.was_run = 1
+        self.log += "test_method "
 
 
 class TestCaseTest(TestCase):
@@ -30,11 +29,11 @@ class TestCaseTest(TestCase):
 
     def test_running(self):
         self.test.run()
-        assert self.test.was_run
+        assert self.test.log == "set_up test_method "
 
     def test_set_up(self):
         self.test.run()
-        assert self.test.log == "set_up "
+        assert self.test.log == "set_up test_method "
 
 
 TestCaseTest("test_running").run()
