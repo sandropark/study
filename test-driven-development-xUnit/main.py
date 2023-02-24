@@ -17,8 +17,7 @@ class TestCase:
     def __init__(self, name):
         self.name = name
 
-    def run(self) -> TestResult:
-        result = TestResult()
+    def run(self, result) -> TestResult:
         result.test_started()
 
         self.set_up()
@@ -53,46 +52,56 @@ class WasRun(TestCase):
 
 
 class TestSuite:
-    def add(self, param):
-        pass
+    def __init__(self):
+        self.tests = []
 
-    def run(self) -> TestResult:
-        return TestResult()
+    def add(self, test):
+        self.tests.append(test)
+
+    def run(self, result):
+        for test in self.tests:
+            test.run(result)
 
 
 class TestCaseTest(TestCase):
 
+    def set_up(self):
+        self.result = TestResult()
+
     def test_template_method(self):
         test = WasRun("test_method")
-        test.run()
+        test.run(self.result)
         assert test.log == "set_up test_method tear_down"
 
     def test_result(self):
         test = WasRun("test_method")
-        result = test.run()
-        assert result.summary() == "1 run, 0 failed"
+        test.run(self.result)
+        assert self.result.summary() == "1 run, 0 failed"
 
     def test_failed_result_formatting(self):
-        result = TestResult()
-        result.test_started()
-        result.test_failed()
-        assert result.summary() == "1 run, 1 failed"
+        self.result.test_started()
+        self.result.test_failed()
+        assert self.result.summary() == "1 run, 1 failed"
 
     def test_failed_result(self):
         test = WasRun("test_broken_method")
-        result = test.run()
-        assert result.summary() == "1 run, 1 failed"
+        test.run(self.result)
+        assert self.result.summary() == "1 run, 1 failed"
 
     def test_suite(self):
         suite = TestSuite()
         suite.add(WasRun("test_method"))
         suite.add(WasRun("test_broken_method"))
-        result = suite.run()
-        assert result.summary() == "2 run, 1 failed"
+        suite.run(self.result)
+        assert self.result.summary() == "2 run, 1 failed"
 
 
-print(TestCaseTest("test_template_method").run().summary())
-print(TestCaseTest("test_result").run().summary())
-print(TestCaseTest("test_failed_result_formatting").run().summary())
-print(TestCaseTest("test_failed_result").run().summary())
-print(TestCaseTest("test_suite").run().summary())
+result = TestResult()
+
+TestCaseTest("test_template_method").run(result)
+TestCaseTest("test_result").run(result)
+TestCaseTest("test_failed_result_formatting").run(result)
+TestCaseTest("test_failed_result").run(result)
+TestCaseTest("test_suite").run(result)
+
+print(result.summary())
