@@ -9,6 +9,7 @@ class TestCase:
 
 class WasRun(TestCase):
     def __init__(self, name) -> None:
+        self.was_set_up = None
         self.was_run = None
         TestCase.__init__(self, name)
 
@@ -23,5 +24,11 @@ class TestCaseTest(TestCase):
         test.run()
         assert test.was_run
 
+    def test_set_up(self):
+        test = WasRun("test_method")
+        test.run()
+        assert test.was_set_up
+
 
 TestCaseTest("test_running").run()
+TestCaseTest("test_set_up").run()
