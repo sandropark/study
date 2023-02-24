@@ -1,15 +1,16 @@
 class TestResult:
     def __init__(self):
         self.run_count = 0
+        self.failure_count = 0
 
     def test_started(self):
         self.run_count += 1
 
-    def summary(self) -> str:
-        return f'{self.run_count} run, 0 failed'
-
     def test_failed(self):
-        pass
+        self.failure_count += 1
+
+    def summary(self) -> str:
+        return f'{self.run_count} run, {self.failure_count} failed'
 
 
 class TestCase:
