@@ -76,7 +76,7 @@ class TestCaseTest(TestCase):
         assert result.summary() == "1 run, 1 failed"
 
 
-TestCaseTest("test_template_method").run()
-TestCaseTest("test_result").run()
-TestCaseTest("test_failed_result_formatting").run()
-TestCaseTest("test_failed_result").run()
+print(TestCaseTest("test_template_method").run().summary())
+print(TestCaseTest("test_result").run().summary())
+print(TestCaseTest("test_failed_result_formatting").run().summary())
+print(TestCaseTest("test_failed_result").run().summary())
