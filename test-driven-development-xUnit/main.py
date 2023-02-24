@@ -3,8 +3,12 @@ class TestCase:
         self.name = name
 
     def run(self) -> None:
+        self.set_up()
         method = getattr(self, self.name)
         method()
+
+    def set_up(self):
+        pass
 
 
 class WasRun(TestCase):
@@ -12,6 +16,9 @@ class WasRun(TestCase):
         self.was_set_up = None
         self.was_run = None
         TestCase.__init__(self, name)
+
+    def set_up(self):
+        self.was_set_up = 1
 
     def test_method(self) -> None:
         self.was_run = 1
