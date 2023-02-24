@@ -52,6 +52,14 @@ class WasRun(TestCase):
         self.log += "tear_down"
 
 
+class TestSuite:
+    def add(self, param):
+        pass
+
+    def run(self) -> TestResult:
+        return TestResult()
+
+
 class TestCaseTest(TestCase):
 
     def test_template_method(self):
@@ -75,8 +83,16 @@ class TestCaseTest(TestCase):
         result = test.run()
         assert result.summary() == "1 run, 1 failed"
 
+    def test_suite(self):
+        suite = TestSuite()
+        suite.add(WasRun("test_method"))
+        suite.add(WasRun("test_broken_method"))
+        result = suite.run()
+        assert result.summary() == "2 run, 1 failed"
+
 
 print(TestCaseTest("test_template_method").run().summary())
 print(TestCaseTest("test_result").run().summary())
 print(TestCaseTest("test_failed_result_formatting").run().summary())
 print(TestCaseTest("test_failed_result").run().summary())
+print(TestCaseTest("test_suite").run().summary())
