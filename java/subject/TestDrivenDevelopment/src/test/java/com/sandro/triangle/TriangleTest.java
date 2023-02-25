@@ -35,10 +35,16 @@ public class TriangleTest {
         }
 
         private void validate(int a, int b, int c) {
-            if (a < 1 || b < 1 || c < 1)
+            if (isSmallerThan1(a, b, c) || isNotTriangle(a, b, c))
                 throw new IllegalArgumentException();
-            if (a + b >= c || a + c >= b || b + c >= a)
-                throw new IllegalArgumentException();
+        }
+
+        private boolean isNotTriangle(int a, int b, int c) {
+            return a + b >= c || a + c >= b || b + c >= a;
+        }
+
+        private boolean isSmallerThan1(int a, int b, int c) {
+            return a < 1 || b < 1 || c < 1;
         }
 
     }
