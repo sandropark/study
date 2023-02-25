@@ -37,6 +37,8 @@ public class TriangleTest {
         private void validate(int a, int b, int c) {
             if (a < 1 || b < 1 || c < 1)
                 throw new IllegalArgumentException();
+            if (a + b >= c || a + c >= b || b + c >= a)
+                throw new IllegalArgumentException();
         }
 
     }
