@@ -16,6 +16,13 @@ public class TriangleTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("한 변의 길이가 다른 두 변의 길이보다 작지 않다면 예외가 발생한다.")
+    @Test
+    void oneSideShouldBeSmallerThanSumOfTheOthers() throws Exception {
+        assertThatThrownBy(() -> new Triangle(1, 1, 2))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
     private class Triangle {
         private final int a;
         private final int b;
