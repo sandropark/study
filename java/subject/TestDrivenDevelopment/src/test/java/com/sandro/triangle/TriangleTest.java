@@ -63,7 +63,11 @@ public class TriangleTest {
         }
 
         public int code() {
-            return 1;
+            if (a == b && a == c)
+                return 1;
+            if (a != b && a != c && b != c)
+                return 3;
+            return 0;
         }
     }
 }
