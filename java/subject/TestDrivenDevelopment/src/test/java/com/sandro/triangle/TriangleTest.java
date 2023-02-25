@@ -26,7 +26,7 @@ public class TriangleTest {
 
     @DisplayName("정삼각형이라면 1을 반환한다.")
     @Test
-    void test() throws Exception {
+    void shouldReturn1() throws Exception {
         Triangle triangle = new Triangle(1, 1, 1);
         assertThat(triangle.code()).isEqualTo(1);
     }
@@ -56,7 +56,7 @@ public class TriangleTest {
         }
 
         public int code() {
-            return 0;
+            return 1;
         }
     }
 }
