@@ -40,7 +40,7 @@ public class TriangleTest {
         }
 
         private boolean isNotTriangle(int a, int b, int c) {
-            return a + b >= c || a + c >= b || b + c >= a;
+            return a + b <= c || a + c <= b || b + c <= a;
         }
 
         private boolean isSmallerThan1(int a, int b, int c) {
