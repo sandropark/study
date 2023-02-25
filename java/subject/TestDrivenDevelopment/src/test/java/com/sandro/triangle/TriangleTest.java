@@ -45,37 +45,4 @@ public class TriangleTest {
         assertThat(triangle.code()).isEqualTo(2);
     }
 
-    private class Triangle {
-        private final int a;
-        private final int b;
-        private final int c;
-        public Triangle(int a, int b, int c) {
-            validate(a, b, c);
-            this.a = a;
-            this.b = b;
-            this.c = c;
-        }
-
-        private void validate(int a, int b, int c) {
-            if (isSmallerThan1(a, b, c) || isNotTriangle(a, b, c))
-                throw new IllegalArgumentException();
-        }
-
-        private boolean isNotTriangle(int a, int b, int c) {
-            return a + b <= c || a + c <= b || b + c <= a;
-        }
-
-        private boolean isSmallerThan1(int a, int b, int c) {
-            return a < 1 || b < 1 || c < 1;
-        }
-
-        public int code() {
-            if (a == b && a == c)
-                return 1;
-            if (a != b && a != c && b != c)
-                return 3;
-            else
-                return 2;
-        }
-    }
 }
