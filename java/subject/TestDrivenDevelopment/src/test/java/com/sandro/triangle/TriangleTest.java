@@ -74,7 +74,8 @@ public class TriangleTest {
                 return 1;
             if (a != b && a != c && b != c)
                 return 3;
-            return 0;
+            else
+                return 2;
         }
     }
 }
