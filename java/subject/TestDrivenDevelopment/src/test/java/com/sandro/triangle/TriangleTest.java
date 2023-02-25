@@ -3,6 +3,7 @@ package com.sandro.triangle;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class TriangleTest {
@@ -21,6 +22,13 @@ public class TriangleTest {
     void oneSideShouldBeSmallerThanSumOfTheOthers() throws Exception {
         assertThatThrownBy(() -> new Triangle(1, 1, 2))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("정삼각형이라면 1을 반환한다.")
+    @Test
+    void test() throws Exception {
+        Triangle triangle = new Triangle(1, 1, 1);
+        assertThat(triangle.code()).isEqualTo(1);
     }
 
     private class Triangle {
@@ -47,5 +55,8 @@ public class TriangleTest {
             return a < 1 || b < 1 || c < 1;
         }
 
+        public int code() {
+            return 0;
+        }
     }
 }
