@@ -31,6 +31,13 @@ public class TriangleTest {
         assertThat(triangle.code()).isEqualTo(1);
     }
 
+    @DisplayName("부등변 삼각형이라면 3을 반환한다.")
+    @Test
+    void shouldReturn2() throws Exception {
+        Triangle triangle = new Triangle(2, 3, 4);
+        assertThat(triangle.code()).isEqualTo(3);
+    }
+
     private class Triangle {
         private final int a;
         private final int b;
