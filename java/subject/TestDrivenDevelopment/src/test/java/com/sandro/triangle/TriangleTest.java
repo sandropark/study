@@ -12,15 +12,24 @@ public class TriangleTest {
     void argumentsShouldBeGreaterThan0() throws Exception {
         assertThatThrownBy(() -> new Triangle(0, 0, 0))
                 .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new Triangle(-1, 1, 1))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     private class Triangle {
+        private final int a;
+        private final int b;
+        private final int c;
         public Triangle(int a, int b, int c) {
             validate(a, b, c);
+            this.a = a;
+            this.b = b;
+            this.c = c;
         }
 
         private void validate(int a, int b, int c) {
-            throw new IllegalArgumentException();
+            if (a < 1 || b < 1 || c < 1)
+                throw new IllegalArgumentException();
         }
 
     }
