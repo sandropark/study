@@ -26,4 +26,15 @@ public class TwoSumTest {
         throw new IllegalArgumentException();
     }
 
+    private int[] 가장_빠른_방법(int[] nums, int target) {
+        for (int i = 1; i < nums.length; i++) {
+            for (int j = i; j < nums.length; j++) {
+                if (nums[j - i] + nums[j] == target) {
+                    return new int[]{j - i, j};
+                }
+            }
+        }
+        throw new IllegalArgumentException();
+    }
+
 }
