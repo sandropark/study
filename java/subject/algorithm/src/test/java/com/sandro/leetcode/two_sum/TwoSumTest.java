@@ -13,6 +13,8 @@ public class TwoSumTest {
     }
 
     private int[] twoSum(int[] nums, int target) {
+        if (nums.length == 2)
+            return new int[]{0, 1};
         for (int i = 0; i < nums.length; i++) {
             int augend = nums[i];
             for (int j = 0; j < nums.length; j++) {
