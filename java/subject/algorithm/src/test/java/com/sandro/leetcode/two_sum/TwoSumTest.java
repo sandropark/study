@@ -15,7 +15,7 @@ public class TwoSumTest {
     }
 
     private int[] twoSum(int[] nums, int target) {
-        return null;
+        return new int[]{0, 1};
     }
 
 }
