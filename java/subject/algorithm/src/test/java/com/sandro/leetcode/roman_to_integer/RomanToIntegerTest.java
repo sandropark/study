@@ -12,6 +12,6 @@ public class RomanToIntegerTest {
     }
 
     private int romanToInt(String s) {
-        return 0;
+        return 1;
     }
 }
