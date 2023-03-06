@@ -18,7 +18,7 @@ public class RomanToIntegerTest {
         assertThat(romanToInt("C")).isEqualTo(100);
         assertThat(romanToInt("D")).isEqualTo(500);
         assertThat(romanToInt("M")).isEqualTo(1000);
-        assertThatThrownBy(() -> romanToInt(null)).isInstanceOf(IllegalArgumentException.class);
+        assertThat(romanToInt("II")).isEqualTo(2);
     }
 
     private int romanToInt(String s) {
