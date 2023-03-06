@@ -20,6 +20,7 @@ public class RomanToIntegerTest {
         assertThat(romanToInt("M")).isEqualTo(1000);
         assertThat(romanToInt("II")).isEqualTo(2);
         assertThat(romanToInt("IV")).isEqualTo(4);
+        assertThat(romanToInt("IX")).isEqualTo(9);
     }
 
     private int romanToInt(String s) {
