@@ -2,6 +2,8 @@ package com.sandro.leetcode.roman_to_integer;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -20,13 +22,7 @@ public class RomanToIntegerTest {
     }
 
     private int romanToInt(String s) {
-        if ("I".equals(s)) return 1;
-        if ("V".equals(s)) return 5;
-        if ("X".equals(s)) return 10;
-        if ("L".equals(s)) return 50;
-        if ("C".equals(s)) return 100;
-        if ("D".equals(s)) return 500;
-        if ("M".equals(s)) return 1000;
-        throw new IllegalArgumentException();
+        Map<String, Integer> map = Map.of("I", 1, "V", 5, "X", 10, "L", 50, "C", 100, "D", 500, "M", 1000);
+        return map.get(s);
     }
 }
