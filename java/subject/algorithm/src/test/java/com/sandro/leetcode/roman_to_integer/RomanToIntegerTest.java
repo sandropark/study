@@ -27,11 +27,11 @@ public class RomanToIntegerTest {
         String[] strings = s.split("");
         int result = map.get(strings[0]);
         for (int i = 1; i < strings.length; i++) {
-            String preValue = strings[i - 1];
-            String tempValue = strings[i];
-            if (preValue.equals("I") && List.of("V", "X").contains(tempValue))
-                result *= -1;
-            result += map.get(tempValue);
+            Integer preValue = map.get(strings[i - 1]);
+            Integer tempValue = map.get(strings[i]);
+            if (preValue == tempValue * 0.2)
+                tempValue = (int)(tempValue * 0.6);
+            result += tempValue;
         }
         return result;
     }
