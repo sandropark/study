@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class RomanToIntegerTest {
 
@@ -23,6 +22,11 @@ public class RomanToIntegerTest {
 
     private int romanToInt(String s) {
         Map<String, Integer> map = Map.of("I", 1, "V", 5, "X", 10, "L", 50, "C", 100, "D", 500, "M", 1000);
-        return map.get(s);
+        int result = 0;
+        String[] strings = s.split("");
+        for (String str : strings) {
+            result += map.get(str);
+        }
+        return result;
     }
 }
