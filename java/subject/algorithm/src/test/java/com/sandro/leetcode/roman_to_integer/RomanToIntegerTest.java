@@ -32,6 +32,8 @@ public class RomanToIntegerTest {
             Integer tempValue = map.get(strings[i]);
             if (preValue == tempValue * 0.2)
                 tempValue = (int)(tempValue * 0.6);
+            if (preValue == tempValue * 0.1)
+                tempValue = (int)(tempValue * 0.8);
             result += tempValue;
         }
         return result;
