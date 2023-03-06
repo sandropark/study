@@ -2,9 +2,9 @@ package com.sandro.leetcode.roman_to_integer;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.Map;
 
+import static com.sandro.leetcode.roman_to_integer.RomanToIntegerTest.RomanConvertor.romanToInt;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RomanToIntegerTest {
@@ -21,21 +21,25 @@ public class RomanToIntegerTest {
         assertThat(romanToInt("II")).isEqualTo(2);
         assertThat(romanToInt("IV")).isEqualTo(4);
         assertThat(romanToInt("IX")).isEqualTo(9);
+        assertThat(romanToInt("MCMXCIV")).isEqualTo(1994);
     }
 
-    private int romanToInt(String s) {
-        Map<String, Integer> map = Map.of("I", 1, "V", 5, "X", 10, "L", 50, "C", 100, "D", 500, "M", 1000);
-        String[] strings = s.split("");
-        int result = map.get(strings[0]);
-        for (int i = 1; i < strings.length; i++) {
-            Integer preValue = map.get(strings[i - 1]);
-            Integer tempValue = map.get(strings[i]);
-            if (preValue == tempValue * 0.2)
-                tempValue = (int)(tempValue * 0.6);
-            if (preValue == tempValue * 0.1)
-                tempValue = (int)(tempValue * 0.8);
-            result += tempValue;
+    public static class RomanConvertor {
+        private static final Map<String, Integer> map = Map.of("I", 1, "V", 5, "X", 10, "L", 50, "C", 100, "D", 500, "M", 1000);
+
+        public static int romanToInt(String s) {
+            String[] strings = s.split("");
+            int result = map.get(strings[0]);
+            for (int i = 1; i < strings.length; i++) {
+                Integer preValue = map.get(strings[i - 1]);
+                Integer tempValue = map.get(strings[i]);
+                if (preValue == tempValue * 0.2)
+                    tempValue = (int)(tempValue * 0.6);
+                if (preValue == tempValue * 0.1)
+                    tempValue = (int)(tempValue * 0.8);
+                result += tempValue;
+            }
+            return result;
         }
-        return result;
     }
 }
