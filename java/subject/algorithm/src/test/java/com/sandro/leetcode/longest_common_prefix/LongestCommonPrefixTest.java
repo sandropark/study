@@ -10,6 +10,7 @@ public class LongestCommonPrefixTest {
     void testLongestCommonPrefix() throws Exception {
         assertThat(longestCommonPrefix("")).isEqualTo("");
         assertThat(longestCommonPrefix("a")).isEqualTo("a");
+        assertThat(longestCommonPrefix("", "a")).isEqualTo("");
     }
 
     private String longestCommonPrefix(String... strings) {
