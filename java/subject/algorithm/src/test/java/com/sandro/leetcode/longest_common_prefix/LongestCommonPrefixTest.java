@@ -8,10 +8,10 @@ public class LongestCommonPrefixTest {
 
     @Test
     void testLongestCommonPrefix() throws Exception {
-        assertThat(longestCommonPrefix(new String[]{""})).isEqualTo("");
+        assertThat(longestCommonPrefix("")).isEqualTo("");
     }
 
-    private String longestCommonPrefix(String[] strings) {
-        return null;
+    private String longestCommonPrefix(String... strings) {
+        return "";
     }
 }
