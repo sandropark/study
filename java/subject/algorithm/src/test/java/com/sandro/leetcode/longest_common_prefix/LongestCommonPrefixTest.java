@@ -18,8 +18,9 @@ public class LongestCommonPrefixTest {
     private String longestCommonPrefix(String... strings) {
         String preFix = strings[0];
         for (int i = 1; i < strings.length; i++) {
-            if (strings[i].equals("")) return "";
-            if (!preFix.equals(strings[i])) return "";
+            String str = strings[i];
+            if (str.isEmpty()) return "";
+            if (!preFix.equals(str)) return "";
         }
         return preFix;
     }
