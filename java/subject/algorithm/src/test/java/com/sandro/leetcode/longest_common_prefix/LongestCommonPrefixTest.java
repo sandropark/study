@@ -17,7 +17,7 @@ public class LongestCommonPrefixTest {
         String preFix = "";
         for (String str : strings) {
             if (str.equals("")) return "";
-            preFix = str;
+            if (preFix.equals("")) preFix = str;
         }
         return preFix;
     }
