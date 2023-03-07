@@ -9,6 +9,7 @@ public class LongestCommonPrefixTest {
     @Test
     void testLongestCommonPrefix() throws Exception {
         assertThat(longestCommonPrefix("")).isEqualTo("");
+        assertThat(longestCommonPrefix("a")).isEqualTo("a");
     }
 
     private String longestCommonPrefix(String... strings) {
