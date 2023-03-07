@@ -13,6 +13,10 @@ public class LongestCommonPrefixTest {
     }
 
     private String longestCommonPrefix(String... strings) {
-        return "";
+        String preFix = "";
+        for (String str : strings) {
+            preFix = str;
+        }
+        return preFix;
     }
 }
