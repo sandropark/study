@@ -13,6 +13,7 @@ public class LongestCommonPrefixTest {
         assertThat(longestCommonPrefix("", "a")).isEqualTo("");
         assertThat(longestCommonPrefix("a", "a")).isEqualTo("a");
         assertThat(longestCommonPrefix("a", "b")).isEqualTo("");
+        assertThat(longestCommonPrefix("ab", "a")).isEqualTo("a");
     }
 
     private String longestCommonPrefix(String... strings) {
