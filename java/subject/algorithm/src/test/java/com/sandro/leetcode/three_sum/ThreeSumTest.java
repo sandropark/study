@@ -15,17 +15,31 @@ public class ThreeSumTest {
         assertThat(threeSum(0, 0, 0)).contains(List.of(0, 0, 0));
         assertThat(threeSum(0, 1, 1)).isEmpty();
         assertThat(threeSum(0, 1, -1).get(0)).contains(-1, 0, 1);
-        assertThat(threeSum(0, 1, -1, 1).get(0)).contains(-1, 0, 1);
+
+        assertThat(threeSum(0, 1, -1, 1)).hasSize(1);
+        threeSum(0, 1, -1, 1).forEach(list -> assertThat(list).contains(-1, 0, 1));
     }
 
     private List<List<Integer>> threeSum(int... nums) {
         List<List<Integer>> result = new ArrayList<>();
-        if (isSumZero(nums))
-            result.add(Arrays.stream(nums).boxed().collect(Collectors.toList()));
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                for (int k = j + 1; k < nums.length; k++) {
+                    int sum = nums[i] + nums[j] + nums[k];
+                    if (sum == 0 && notContains(result, List.of(nums[i], nums[j], nums[k]))) {
+                        result.add(List.of(nums[i], nums[j], nums[k]));
+                    }
+                }
+            }
+        }
         return result;
     }
 
-    private boolean isSumZero(int[] nums) {
-        return Arrays.stream(nums).sum() == 0;
+    private boolean notContains(List<List<Integer>> result, List<Integer> list) {
+        for (List<Integer> integers : result) {
+            if (list.containsAll(integers))
+                return false;
+        }
+        return true;
     }
 }
