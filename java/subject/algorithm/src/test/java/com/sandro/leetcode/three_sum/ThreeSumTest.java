@@ -2,23 +2,28 @@ package com.sandro.leetcode.three_sum;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ThreeSumTest {
     @Test
     void threeSumTest() throws Exception {
-        assertThat(threeSum(0, 0, 0)).isEqualTo(List.of(List.of(0, 0, 0)));
-        assertThat(threeSum(0, 1, 1)).isEqualTo(List.of());
+        assertThat(threeSum(0, 0, 0)).contains(List.of(0, 0, 0));
+        assertThat(threeSum(0, 1, 1)).isEmpty();
     }
 
     private List<List<Integer>> threeSum(int... nums) {
-        int result = 0;
-        for (int num : nums)
-            result += num;
-        if (result != 0) return List.of();
+        List<List<Integer>> result = new ArrayList<>();
+        if (isSumZero(nums))
+            result.add(Arrays.stream(nums).boxed().collect(Collectors.toList()));
+        return result;
+    }
 
-        return List.of(List.of(0, 0, 0));
+    private boolean isSumZero(int[] nums) {
+        return Arrays.stream(nums).sum() == 0;
     }
 }
