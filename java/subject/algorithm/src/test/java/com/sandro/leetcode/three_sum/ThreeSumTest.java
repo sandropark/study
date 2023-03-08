@@ -14,6 +14,8 @@ public class ThreeSumTest {
     void threeSumTest() throws Exception {
         assertThat(threeSum(0, 0, 0)).contains(List.of(0, 0, 0));
         assertThat(threeSum(0, 1, 1)).isEmpty();
+        assertThat(threeSum(0, 1, -1).get(0)).contains(-1, 0, 1);
+        assertThat(threeSum(0, 1, -1, 1).get(0)).contains(-1, 0, 1);
     }
 
     private List<List<Integer>> threeSum(int... nums) {
