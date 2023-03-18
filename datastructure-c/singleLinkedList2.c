@@ -12,6 +12,8 @@ NODE *g_pHead = NULL;
 
 void printList(void);
 int insertNewNode(char *data);
+void releaseList(void);
+void deleteNode(char *target);
 
 int main(int argc, char const *argv[])
 {
@@ -21,7 +23,61 @@ int main(int argc, char const *argv[])
     printList();
     insertNewNode("sandro3");
     printList();
+    
+    deleteNode("sandro2");
+    printList();
+    deleteNode("sandro1");
+    printList();
+    deleteNode("sandro3");
+    printList();
+
+    releaseList();
     return 0;
+}
+
+void deleteNode(char *target)
+{   
+    NODE *pTmp = g_pHead;
+    // 조건에 맞는 노드가 없는 경우
+    if (pTmp == NULL) return;
+
+
+    // 노드가 1개인 경우
+
+    가장 처음 노드 지울 때 다시 확인하기
+    if (strcmp(pTmp->data, target) == 0) {
+        g_pHead = NULL;
+        return;
+    }
+    NODE *pNext = pTmp->next;
+    while (pNext != NULL)
+    {
+        if (strcmp(pNext->data, target) == 0)
+        {
+            printf("Found : %s\n", pNext->data);
+            pTmp->next = pNext->next;
+            free(pNext);
+            return;
+        }
+        pTmp = pNext;
+        pNext = pTmp->next;
+    }
+    
+}
+
+void releaseList(void)  // 리스트의 모든 요소를 삭제(free)한다.
+{
+    // 반복문을 돌면서 요소를 하나씩 삭제한다.
+    NODE *pTmp = g_pHead;
+    if (pTmp == NULL) return;
+    NODE *pDelete = pTmp;   // 현재 포인터를 임시 포인터에 저장한다. 현재 포인터를 먼저 지우면 다음 노드를 가르키는 포인터를 잃기 때문이다.
+    while (pDelete != NULL)
+    {
+        pTmp = pTmp->next;      // 현재 포인터를 다음으로 옮긴다. 
+        printf("Delete: [%p] %s\n", pDelete, pDelete->data);
+        free(pDelete); 
+        pDelete = pTmp;
+    }
 }
 
 int insertNewNode(char *data)
