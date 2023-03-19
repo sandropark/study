@@ -14,6 +14,7 @@ void printList(void);
 int insertNewNode(char *data);
 void releaseList(void);
 void deleteNode(char *target);
+int findNode(char *target);
 
 int main(int argc, char const *argv[])
 {
@@ -23,6 +24,10 @@ int main(int argc, char const *argv[])
     printList();
     insertNewNode("sandro3");
     printList();
+
+    printf("sandro1 : %i\n", findNode("sandro1"));
+    printf("sandro2 : %i\n", findNode("sandro2"));
+    printf("sandro3 : %i\n\n", findNode("sandro3"));
     
     deleteNode("sandro2");
     printList();
@@ -35,21 +40,32 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
+int findNode(char *target)
+{
+    NODE *pTmp = g_pHead;
+    while(pTmp != NULL)
+    {
+        if (strcmp(pTmp->data, target) == 0) return 1;
+        pTmp = pTmp->next;
+    }
+    return 0;
+}
+
 void deleteNode(char *target)
 {   
     NODE *pTmp = g_pHead;
     // 조건에 맞는 노드가 없는 경우
     if (pTmp == NULL) return;
 
+    NODE *pNext = pTmp->next;
 
     // 노드가 1개인 경우
-
-    가장 처음 노드 지울 때 다시 확인하기
     if (strcmp(pTmp->data, target) == 0) {
-        g_pHead = NULL;
+        printf("Found : %s\n", pTmp->data);
+        g_pHead = pNext;
         return;
     }
-    NODE *pNext = pTmp->next;
+
     while (pNext != NULL)
     {
         if (strcmp(pNext->data, target) == 0)
@@ -62,7 +78,6 @@ void deleteNode(char *target)
         pTmp = pNext;
         pNext = pTmp->next;
     }
-    
 }
 
 void releaseList(void)  // 리스트의 모든 요소를 삭제(free)한다.
