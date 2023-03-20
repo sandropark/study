@@ -28,7 +28,7 @@ int main(int argc, char const *argv[])
     printf("sandro1 : %i\n", findNode("sandro1"));
     printf("sandro2 : %i\n", findNode("sandro2"));
     printf("sandro3 : %i\n\n", findNode("sandro3"));
-    
+
     deleteNode("sandro2");
     printList();
     deleteNode("sandro1");
@@ -53,30 +53,22 @@ int findNode(char *target)
 
 void deleteNode(char *target)
 {   
+    NODE *pPrev = NULL;
     NODE *pTmp = g_pHead;
-    // 조건에 맞는 노드가 없는 경우
-    if (pTmp == NULL) return;
-
-    NODE *pNext = pTmp->next;
-
-    // 노드가 1개인 경우
-    if (strcmp(pTmp->data, target) == 0) {
-        printf("Found : %s\n", pTmp->data);
-        g_pHead = pNext;
-        return;
-    }
-
-    while (pNext != NULL)
+    while (pTmp != NULL)
     {
-        if (strcmp(pNext->data, target) == 0)
+        if (strcmp(pTmp->data, target) == 0)
         {
-            printf("Found : %s\n", pNext->data);
-            pTmp->next = pNext->next;
-            free(pNext);
+            printf("Found : %s\n", pTmp->data);
+            if (pPrev == NULL)  // 해당 데이터가 헤드인경우
+                g_pHead = g_pHead->next;
+            else              
+                pPrev->next = pTmp->next;
+            free(pTmp);                
             return;
         }
-        pTmp = pNext;
-        pNext = pTmp->next;
+        pPrev = pTmp;
+        pTmp = pTmp->next;
     }
 }
 
