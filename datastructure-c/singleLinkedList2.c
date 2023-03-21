@@ -9,6 +9,7 @@ typedef struct NODE
 } NODE;
 
 NODE *g_pHead = NULL;
+NODE *g_pTail = NULL;
 
 void printList(void);
 int insertNewNode(char *data);
@@ -37,6 +38,15 @@ int main(int argc, char const *argv[])
     printList();
 
     releaseList();
+
+    insertNewNode("sandro1");
+    printList();
+    insertNewNode("sandro2");
+    printList();
+    insertNewNode("sandro3");
+    printList();
+
+    releaseList();
     return 0;
 }
 
@@ -62,9 +72,11 @@ void deleteNode(char *target)
             printf("Found : %s\n", pTmp->data);
             if (pPrev == NULL)  // 해당 데이터가 헤드인경우
                 g_pHead = g_pHead->next;
-            else              
+            else
                 pPrev->next = pTmp->next;
-            free(pTmp);                
+            if (pTmp == g_pTail)
+                g_pTail = 0;
+            free(pTmp);
             return;
         }
         pPrev = pTmp;
@@ -85,6 +97,8 @@ void releaseList(void)  // 리스트의 모든 요소를 삭제(free)한다.
         free(pDelete); 
         pDelete = pTmp;
     }
+    g_pHead = 0;
+    g_pTail = 0;
 }
 
 int insertNewNode(char *data)
@@ -95,29 +109,10 @@ int insertNewNode(char *data)
     strcpy(pNode->data, data);
 
     if (g_pHead == NULL)
-    {
         g_pHead = pNode;
-        return 0;
-    } 
-    
-    // 새로 생성한 노드를 헤드로 만들기
-    // pNode->next = g_pHead;
-    // g_pHead = pNode;
-
-    // 새로 생성한 노드를 테일로 만들기
-    NODE *tmp = g_pHead;
-    NODE *tmpNext = g_pHead->next;
-
-    while (tmp != NULL)
-    {
-        if (tmpNext == NULL)
-        {
-            tmp->next = pNode;
-            return 0;
-        }
-        tmp = tmpNext;
-        tmpNext = tmp->next;        
-    }
+    else
+        g_pTail->next = pNode;
+    g_pTail = pNode;
     
     return 1;
 }
