@@ -12,6 +12,7 @@ typedef struct NODE
 } NODE;
 
 NODE g_pHead = {0};
+NODE *g_pTail = NULL;
 
 int isEmpty()
 {
@@ -20,10 +21,14 @@ int isEmpty()
 
 int insertHead(char *data) 
 {
+    // 데이터 생성
     NODE *pNode = malloc(sizeof(NODE));
     memset(pNode, 0, sizeof(NODE)); // 메모리를 0으로 초기화. 안해도 되지만 하는 것을 추천.
     strcpy(pNode->data, data);
-    if (isEmpty() == 0)
+
+    if (isEmpty())
+        g_pTail = pNode;
+    else
         pNode->next = g_pHead.next;
     g_pHead.next = pNode;
     return 1;   // 요소 추가 성공 여부를 판단하기 위해서 반환한다.
@@ -31,14 +36,16 @@ int insertHead(char *data)
 
 int insertTail(char *data) 
 {
+    // 데이터 생성
     NODE *pNode = malloc(sizeof(NODE));
     memset(pNode, 0, sizeof(NODE)); // 메모리를 0으로 초기화. 안해도 되지만 하는 것을 추천.
     strcpy(pNode->data, data);
 
-    NODE *pTmp = &g_pHead;
-    while (pTmp->next != NULL)
-        pTmp = pTmp->next;
-    pTmp->next = pNode;
+    if (isEmpty())
+        g_pHead.next = pNode;
+    else 
+        g_pTail->next = pNode;
+    g_pTail = pNode;
     return 1;   // 요소 추가 성공 여부를 판단하기 위해서 반환한다.
 }
 
@@ -62,6 +69,7 @@ int delete(char *data)
     {
         NODE *pDelete = pPrev->next;
         pPrev->next = pDelete->next;
+        if (g_pTail == pDelete) g_pTail = NULL;
         printf("Delete() : %s\n", pDelete->data);
         free(pDelete);
         return 1;
@@ -81,6 +89,7 @@ void deleteAll()
         free(pDelete);
     }
     g_pHead.next = NULL;
+    g_pTail = NULL;
     putchar('\n');
 }
 
@@ -96,6 +105,7 @@ int pop(NODE *pPopNode) // 가장 처음 노드를 삭제하고 외부에서 삭
     NODE *pDelete = g_pHead.next;
     memcpy(pPopNode, pDelete, sizeof(NODE));
     g_pHead.next = pDelete->next;   // 다음 데이터로
+    if (g_pTail == pDelete) g_pTail = NULL;
     printf("Pop() : %s\n", pDelete->data);
     free(pDelete);                  // 삭제
     return 1;
@@ -193,6 +203,31 @@ int main(int argc, char const *argv[])
     get(&tmp);
     get(&tmp);
     get(&tmp);
+    putchar('\n');
+
+    printf("Tail 추가 - insertHead() : 빈 리스트에 A를 넣으면 head와 tail 모두 A를 가르킨다.\n");
+    insertHead("A");
+    printf("Head : %s\n", g_pHead.next->data);
+    printf("tail : %s\n", g_pTail->data);
+    putchar('\n');
+
+    printf("Tail 추가 - insertHead() : A가 든 리스트에 B를 넣으면 head는 B, tail은 A를 가르킨다.\n");
+    insertHead("B");
+    printf("Head : %s\n", g_pHead.next->data);
+    printf("tail : %s\n", g_pTail->data);
+    deleteAll();
+
+    printf("Tail 추가 - insertTail() : 빈 리스트에 A를 넣으면 head와 tail 모두 A를 가르킨다.\n");
+    insertTail("A");
+    printf("Head : %s\n", g_pHead.next->data);
+    printf("tail : %s\n", g_pTail->data);
+    putchar('\n');
+
+    printf("Tail 추가 - insertTail() : A가 든 리스트에 B를 넣으면 head는 A, tail은 B를 가르킨다.\n");
+    insertTail("B");
+    printf("Head : %s\n", g_pHead.next->data);
+    printf("tail : %s\n", g_pTail->data);
+    deleteAll();
 
     return 0;
 }
