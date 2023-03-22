@@ -114,6 +114,36 @@ int delete(const char *data)
     return --g_size;
 }
 
+int insertAt(int idx, char *data)
+{   
+    if (idx > g_size) return 0;
+    if (idx == 0) return insertHead(data);
+    if (idx == g_size) return insertTail(data);
+
+    NODE *pTmp = g_pHead;
+    for (int i = 0; i <= idx; i++)
+        pTmp = pTmp->next;
+    NODE *pNewNode = createNode(data);
+    pNewNode->prev = pTmp;
+    pNewNode->next = pTmp->next;
+    pTmp->next->prev = pNewNode;
+    pTmp->next = pNewNode;
+    g_size++;
+    return 1;
+}
+
+NODE *getAt(int idx)
+{
+    if (idx > g_size-1) return NULL;
+    if (idx == 0) return g_pHead->next;
+    if (idx == g_size-1) return g_pTail->prev;
+
+    NODE *pTmp = g_pHead;
+    for (int i = 0; i < idx; i++)
+        pTmp = pTmp->next;
+    return pTmp->next;
+}
+
 int main(int argc, char const *argv[])
 {   
     printf("initList() : 전역변수에 메모리 할당 및 초기화.\n");
@@ -160,6 +190,43 @@ int main(int argc, char const *argv[])
     printf("delete() : 빈 리스트에 데이터 삭제시 아무일도 일어나지 않는다.\n");
     delete("C");
     print(0);
+
+    printf("insertAt() : 빈 리스트에 인덱스 0으로 A를 추가한다. A가 출력된다.\n");
+    insertAt(0, "A");
+    print(1);
+
+    printf("insertAt() : 유효하지 않은 인덱스로 데이터를 추가하는 경우 0이 반환된다.\n");
+    deleteAll();
+    printf("%d\n", insertAt(1, "A"));
+    print(0);
+
+    printf("insertAt() : A가 든 리스트에 인덱스 1로 B를 추가하는 경우 AB가 출력된다.\n");
+    insertAt(0, "A");
+    insertAt(1, "B");
+    print(2);
+    deleteAll();
+
+    printf("insertAt() : AC가 든 리스트에 인덱스 1로 B를 추가하는 경우 ABC가 출력된다.\n");
+    insertAt(0, "A");
+    insertAt(1, "B");
+    insertAt(1, "C");
+    print(3);
+    deleteAll();
+
+    printf("getAt() : ABC가 든 리스트에 인덱스 0로 조회할 시 A의 주소를 반환한다.\n");
+    insertAt(0, "A");
+    insertAt(1, "B");
+    insertAt(1, "C");
+    printf("getAt() : 예상 %p, 실제 %p\n\n", g_pHead->next, getAt(0));
+
+    printf("getAt() : ABC가 든 리스트에 인덱스 2로 조회할 시 C의 주소를 반환한다.\n");
+    printf("getAt() : 예상 %p, 실제 %p\n\n", g_pTail->prev, getAt(2));
+
+    printf("getAt() : ABC가 든 리스트에 인덱스 1로 조회할 시 B의 주소를 반환한다.\n");
+    printf("getAt() : 예상 %p, 실제 %p\n\n", g_pTail->prev->prev, getAt(1));
+
+    printf("getAt() : ABC가 든 리스트에 범위를 넘어서는 인덱스로 조회할 시 NULL을 반환한다.\n");
+    printf("getAt() : 예상 %p, 실제 %p\n\n", NULL, getAt(10));
 
     return 0;
 }
