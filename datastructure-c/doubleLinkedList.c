@@ -13,6 +13,9 @@ typedef struct NODE
 NODE *g_pHead, *g_pTail;
 int g_size;
 
+void insertAfter(NODE *pPrev, const char *data);
+void insertBefore(NODE *pNext, const char *data);
+
 int isEmpty()
 {
     return g_size == 0;
@@ -41,33 +44,13 @@ NODE *createNode(const char *data)
 
 int insertHead(const char *data)
 {
-    NODE *pNewNode = createNode(data);
-    if (isEmpty()) {
-        g_pTail->prev = pNewNode;
-        pNewNode->next = g_pTail;
-    } else {
-        pNewNode->next = g_pHead->next;
-        g_pHead->next->prev = pNewNode;
-    }
-    pNewNode->prev = g_pHead;
-    g_pHead->next = pNewNode;
-    return ++g_size;
+    insertAfter(g_pHead, data);
+    return 1;
 }
 
 int insertTail(const char *data)
 {
-    NODE *pNewNode = createNode(data);
-    
-    if (isEmpty()) {
-        g_pHead->next = pNewNode;
-        pNewNode->prev = g_pHead;
-    } else {
-        pNewNode->prev = g_pTail->prev;
-        g_pTail->prev->next = pNewNode;
-    }
-    pNewNode->next = g_pTail;
-    g_pTail->prev = pNewNode;
-    g_size++;
+    insertBefore(g_pTail, data);
     return 1;
 }
 
@@ -114,28 +97,44 @@ int delete(const char *data)
     return --g_size;
 }
 
+void insertBefore(NODE *pNext, const char *data)
+{
+    NODE *pNewNode = createNode(data);
+    pNewNode->prev = pNext->prev;
+    pNewNode->next = pNext;
+    pNext->prev->next = pNewNode;
+    pNext->prev = pNewNode;
+    g_size++;
+}
+
+void insertAfter(NODE *pPrev, const char *data)
+{
+    NODE *pNewNode = createNode(data);
+    pNewNode->prev = pPrev;
+    pNewNode->next = pPrev->next;
+    pPrev->next->prev = pNewNode;
+    pPrev->next = pNewNode;
+    g_size++;
+}
+
 int insertAt(int idx, char *data)
 {   
-    if (idx > g_size) return 0;
-    if (idx == 0) return insertHead(data);
-    if (idx == g_size) return insertTail(data);
-
-    NODE *pTmp = g_pHead;
-    for (int i = 0; i <= idx; i++)
-        pTmp = pTmp->next;
-    NODE *pNewNode = createNode(data);
-    pNewNode->prev = pTmp;
-    pNewNode->next = pTmp->next;
-    pTmp->next->prev = pNewNode;
-    pTmp->next = pNewNode;
-    g_size++;
-    return 1;
+    int i = 0;
+    for (NODE *pTmp = g_pHead->next; pTmp != g_pTail; pTmp = pTmp->next)
+    {
+        if (i == idx) {
+            insertBefore(pTmp, data);
+            return i;
+        } 
+        i++;
+    }
+    insertTail(data);
+    return i;
 }
 
 NODE *getAt(int idx)
 {
-    if (idx > g_size-1) return NULL;
-    if (idx == 0) return g_pHead->next;
+    if (idx >= g_size) return NULL;
     if (idx == g_size-1) return g_pTail->prev;
 
     NODE *pTmp = g_pHead;
@@ -194,11 +193,12 @@ int main(int argc, char const *argv[])
     printf("insertAt() : 빈 리스트에 인덱스 0으로 A를 추가한다. A가 출력된다.\n");
     insertAt(0, "A");
     print(1);
-
-    printf("insertAt() : 유효하지 않은 인덱스로 데이터를 추가하는 경우 0이 반환된다.\n");
     deleteAll();
+
+    printf("insertAt() : 유요하지 않은 인덱스의 경우 리스트 마지막에 데이터를 추가한다. A가 출력된다.\n");
     printf("%d\n", insertAt(1, "A"));
-    print(0);
+    print(1);
+    deleteAll();
 
     printf("insertAt() : A가 든 리스트에 인덱스 1로 B를 추가하는 경우 AB가 출력된다.\n");
     insertAt(0, "A");
@@ -209,7 +209,7 @@ int main(int argc, char const *argv[])
     printf("insertAt() : AC가 든 리스트에 인덱스 1로 B를 추가하는 경우 ABC가 출력된다.\n");
     insertAt(0, "A");
     insertAt(1, "B");
-    insertAt(1, "C");
+    insertAt(2, "C");
     print(3);
     deleteAll();
 
