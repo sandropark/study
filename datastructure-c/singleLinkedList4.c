@@ -109,6 +109,16 @@ void printAllElements()
     putchar('\n');
 }
 
+void put(char *data)
+{
+    insertTail(data);
+}
+
+int get(NODE *pPopNode)
+{
+    return pop(pPopNode);
+}
+
 int main(int argc, char const *argv[])
 {
     printf("isEmpty() : 리스트가 비어있는 경우. 1을 반환한다.\n");
@@ -170,6 +180,19 @@ int main(int argc, char const *argv[])
     pop(&tmp);
     pop(&tmp);
     pop(&tmp);
+
+    // Queue
+    printf("Queue : ABC를 순서대로 Put()한다. ABC가 출력된다.\n");
+    put("A");
+    put("B");
+    put("C");
+    printAllElements();
+    putchar('\n');
+
+    printf("Queue : ABC가 들어있는 Queue에서 Get()을 하면 ABC 순서대로 삭제된다.\n");
+    get(&tmp);
+    get(&tmp);
+    get(&tmp);
 
     return 0;
 }
