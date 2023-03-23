@@ -6,20 +6,15 @@ typedef struct USER
 {
     char name[64];
     char phone[64];
+    
+    // 맴버 함수 포인터
+    const char *(*getKey)(struct USER *);
 } USER;
-
-const char *getKeyFromUser(void *pData)
-{
-    return ((USER *)pData)->name;
-}
 
 typedef struct NODE
 {
     // 관리 대상 자료
     void *pData;
-
-    // 맴버 함수 포인터
-    const char *(*getKey)(void *);
 
     // 자료구조
     struct NODE *prev;
@@ -28,6 +23,20 @@ typedef struct NODE
 
 NODE *g_pHead, *g_pTail;
 int g_size;
+
+const char *getNameFromUser(USER *pUser)
+{
+    return pUser->name;
+}
+
+USER *createUser(char *name, char *phone)   // 생성자
+{
+    USER *pNew = malloc(sizeof(USER));
+    strcpy(pNew->name, name);
+    strcpy(pNew->phone, phone);
+    pNew->getKey = getNameFromUser;
+    return pNew;
+}
 
 void initList()
 {
@@ -42,7 +51,8 @@ void initList()
 
 void validateNode(NODE *pNode)
 {
-    printf("ValidateNode : prev=[%11p] tmp=[%p] data=[%s] next=[%p]\n", pNode->prev, pNode, pNode->getKey(pNode->pData), pNode->next);
+    USER *pUser = pNode->pData;
+    printf("ValidateNode : prev=[%11p] tmp=[%p] data=[%s] next=[%p]\n", pNode->prev, pNode, pUser->getKey(pUser), pNode->next);
 }
 
 void clear()
@@ -71,26 +81,20 @@ void validate(int expectedSize)
         else if (pTmp == g_pTail)
             printf("TAIL=[%p] prev=[%p]\n", pTmp, pTmp->prev);
         else
-            printf("prev=[%11p] tmp=[%p] data=[%s] next=[%11p]\n", pTmp->prev, pTmp, pTmp->getKey(pTmp->pData),  pTmp->next);
+        {
+            USER *pUser = pTmp->pData;
+            printf("prev=[%11p] tmp=[%p] data=[%s] next=[%11p]\n", pTmp->prev, pTmp, pUser->getKey(pUser),  pTmp->next);
+        }
     }
     putchar('\n');
     clear();
 }
 
-NODE *createNode(void *data, const char *(*pFunc)(void *))
+NODE *createNode(void *data)    // 생성자
 {
     NODE *pNew = malloc(sizeof(NODE));
     memset(pNew, 0, sizeof(NODE));
     pNew->pData = data;
-    pNew->getKey = pFunc;
-    return pNew;
-}
-
-USER *createUser(char *name, char *phone)
-{
-    USER *pNew = malloc(sizeof(USER));
-    strcpy(pNew->name, name);
-    strcpy(pNew->phone, phone);
     return pNew;
 }
 
@@ -122,22 +126,25 @@ int insertAfter(NODE *pPrev, NODE *pNew)
     return 1;
 }
 
-int insertHead(void *pData, const char *(*pFunc)(void *))
+int insertHead(void *pData)
 {
-    insertAfter(g_pHead, createNode(pData, pFunc));
+    insertAfter(g_pHead, createNode(pData));
     return 1;
 }
 
-int insertTail(void *pData, const char *(*pFunc)(void *))
+int insertTail(void *pData)
 {
-    insertBefore(g_pTail, createNode(pData, pFunc));
+    insertBefore(g_pTail, createNode(pData));
     return 1;
 }
 
 NODE *findNodeByKey(const char *key)
 {
     for (NODE *pTmp = g_pHead->next; pTmp != g_pTail; pTmp = pTmp->next)
-        if (strcmp(pTmp->getKey(pTmp->pData), key) == 0) return pTmp;
+    {
+        USER *pUser = pTmp->pData;
+        if (strcmp(pUser->getKey(pUser), key) == 0) return pTmp;
+    }
     return NULL;
 }
 
@@ -167,25 +174,25 @@ int main(int argc, char const *argv[])
     printf("StatusCode = %d\n\n", insertAfter(g_pTail, malloc(sizeof(NODE))));
 
     printf("insertHead() : 가장 앞에 데이터를 추가한다.\n");
-    insertHead(createUser("B", "010-1234-1234"), getKeyFromUser);
-    insertHead(createUser("A", "010-1234-1234"), getKeyFromUser);
+    insertHead(createUser("B", "010-1234-1234"));
+    insertHead(createUser("A", "010-1234-1234"));
     validate(2);
 
     printf("insertTail() : 가장 뒤에 데이터를 추가한다.\n");
-    insertTail(createUser("A", "010-1234-1234"), getKeyFromUser);
-    insertTail(createUser("B", "010-1234-1234"), getKeyFromUser);
+    insertTail(createUser("A", "010-1234-1234"));
+    insertTail(createUser("B", "010-1234-1234"));
     validate(2);
 
     printf("findNodeByKey() : 이름이 A인 노드를 반환한다.\n");
-    insertTail(createUser("A", "010-1234-1234"), getKeyFromUser);
-    insertTail(createUser("B", "010-1234-1234"), getKeyFromUser);
+    insertTail(createUser("A", "010-1234-1234"));
+    insertTail(createUser("B", "010-1234-1234"));
     validateNode(findNodeByKey("A"));
     clear();
     putchar('\n');
     
     printf("deleteByKey() : 이름이 A인 노드를 삭제한다.\n");
-    insertTail(createUser("A", "010-1234-1234"), getKeyFromUser);
-    insertTail(createUser("B", "010-1234-1234"), getKeyFromUser);
+    insertTail(createUser("A", "010-1234-1234"));
+    insertTail(createUser("B", "010-1234-1234"));
     deleteByKey("A");
     validate(1);
 
