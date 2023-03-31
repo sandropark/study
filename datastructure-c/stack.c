@@ -1,63 +1,27 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "singleLinkedList.c"
 
-typedef struct NODE
+int push(LIST *stack, char *data)
 {
-    int value;
-    struct NODE *next;
-} NODE;
-
-NODE *stack = NULL;
-
-void push(int value);
-void print();
-int pop();
-
-int main(void)
-{
-    push(1);
-    push(2);
-    push(3);
-
-    print();
-
-    printf("Pop() : %d\n", pop());
-    printf("Pop() : %d\n", pop());
-    printf("Pop() : %d\n", pop());
-    printf("Pop() : %d\n", pop());
-    return 0;
+    return insertHead(stack, data);
 }
 
-void push(int value)
+int pop(LIST *stack, NODE *pPopNode)
 {
-    NODE *pTmp = malloc(sizeof(NODE));
-    pTmp->value = value;
-    pTmp->next = stack;
-    stack = pTmp;
-}
+    if (isEmpty(stack)) return 0;
 
-int pop()
-{
-    if (stack == NULL) return 0;
-    NODE *pDelete = stack;
-    int result = pDelete->value;
-    stack = stack->next;
+    NODE *pDelete = stack->pHead->next;
+    memcpy(pPopNode, pDelete, sizeof(NODE));
+    stack->pHead->next = pDelete->next;
+    if (stack->pTail == pDelete) stack->pTail = NULL;
+    printf("pop = [%p, %s]\n", pDelete, pDelete->data);
     free(pDelete);
-    return result;
+    stack->size--;
+    return 1;
 }
 
-void print()
+NODE *top(LIST *stack)
 {
-    NODE *pTmp = stack;
-    if (pTmp != NULL)
-    {
-        printf("%d", pTmp->value);
-        pTmp = pTmp->next;
-    }
-    while (pTmp != NULL)
-    {
-        printf(",%d", pTmp->value);
-        pTmp = pTmp->next;
-    }
-    printf("\n");
+    NODE *pTop = stack->pHead->next;
+    printf("top = [%p, %s]\n", pTop, pTop->data);
+    return pTop;
 }
