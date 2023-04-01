@@ -105,4 +105,5 @@ void printAllElements(LIST *list)
 {
     for (NODE *pTmp = list->pHead->next; pTmp != NULL; pTmp = pTmp->next)
         printf("[%p] %s, next[%p]\n", pTmp, pTmp->data, pTmp->next);
+    putchar('\n');
 }
