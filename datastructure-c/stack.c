@@ -1,13 +1,13 @@
 #include "singleLinkedList.c"
 
-int push(LIST *stack, char *data)
+int push(LIST *stack, void *data)
 {
     return insertHead(stack, data);
 }
 
 NODE *pop(LIST *stack)
 {
-    if (isEmpty(stack)) return 0;
+    if (isEmpty(stack)) return NULL;
 
     NODE *pTmp = malloc(sizeof(NODE));
     NODE *pDelete = stack->pHead->next;
