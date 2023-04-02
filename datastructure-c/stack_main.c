@@ -99,11 +99,6 @@ int isOperator(char input)
     return input == '+' || input == '-' || input == '*' || input == '/' || input == '(' || input == ')';
 }
 
-int isNotEmpty(LIST *stack)
-{
-    return stack->size > 0;
-}
-
 int getPriority(char operator)
 {
     if (operator == '*' || operator == '/') return 0;

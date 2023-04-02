@@ -13,7 +13,12 @@ void initList(LIST *list)
 
 int isEmpty(LIST *list)
 {
-    return list->size == 0 ? 1 : 0;
+    return list->size == 0;
+}
+
+int isNotEmpty(LIST *list)
+{
+    return list->size != 0;
 }
 
 NODE *createNode(void *data)

@@ -15,6 +15,7 @@ typedef struct LIST
 
 void initList(LIST *list);
 int isEmpty(LIST *list);
+int isNotEmpty(LIST *list);
 int insertHead(LIST *list, void *data);
 int insertTail(LIST *list, void *data);
 NODE *find(LIST *list, void *data);
