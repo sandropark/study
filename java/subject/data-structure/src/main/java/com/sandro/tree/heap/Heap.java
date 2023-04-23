@@ -44,7 +44,7 @@ public class Heap {
     }
 
     private void heapifyDown(int i) {
-        if (hasLeft(i)) {
+        if (isNotLeaf(i)) {
             Node tempNode = getTempNode(i);
             Node leftNode = getLeftNode(i);
             Node rightNode = getRightNode(i);
@@ -52,7 +52,7 @@ public class Heap {
             Node maxChild = max(leftNode, rightNode);
 
             if (tempNode.smallerThan(maxChild))
-                swap(tempNode, maxChild);
+                heapifyDown(swap(tempNode, maxChild));
         }
     }
 
@@ -66,6 +66,10 @@ public class Heap {
         int leftIndex = i * 2 + 1;
         int lastIndexOfList = list.size() - 1;
         return leftIndex <= lastIndexOfList;
+    }
+
+    private boolean isNotLeaf(int i) {
+        return hasLeft(i);
     }
 
     private Node getTempNode(int i) {
@@ -88,9 +92,10 @@ public class Heap {
                 : node2;
     }
 
-    private void swap(Node tempNode, Node maxChild) {
+    private int swap(Node tempNode, Node maxChild) {
         list.set(tempNode.getIndex(), maxChild.getValue());
         list.set(maxChild.getIndex(), tempNode.getValue());
+        return maxChild.getIndex();
     }
 
 }
