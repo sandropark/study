@@ -1,5 +1,6 @@
 package com.sandro.tree.heap;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,7 @@ class HeapTest {
 
     @DisplayName("isHeap 메서드는")
     @Nested
-    class DisplayIsHeap {
+    class DescribeIsHeap {
 
         @DisplayName("힙이 주어지면")
         @Nested
@@ -41,18 +42,33 @@ class HeapTest {
         }
     }
 
-    @DisplayName("힙이 아닌 리스트를 힙으로 만든다.")
-    @Test
-    void makeHeap() throws Exception {
-        // Given
-        Heap heap = Heap.of(2, 8, 6);
-        assertThat(heap.isHeap()).isFalse();
+    @DisplayName("makeHeap 메서드는")
+    @Nested
+    class DescribeMakeHeap {
 
-        // When
-        heap.makeHeap();
+        @DisplayName("힙이 아닌 객체가 주어지면")
+        @Nested
+        class ContextNotHeapObj {
 
-        // Then
-        assertThat(heap.isHeap()).isTrue();
+            Heap heap = Heap.of(2, 8, 6);
+            Heap heap2 = Heap.of(2, 8, 6, 1, 10, 15, 3, 12, 11);
+
+            @BeforeEach
+            void setUp() {
+                assertThat(heap.isHeap()).isFalse();
+                assertThat(heap2.isHeap()).isFalse();
+            }
+
+            @DisplayName("힙으로 만든다.")
+            @Test
+            void itMakesItHeap() throws Exception {
+                heap.makeHeap();
+                heap2.makeHeap();
+
+                assertThat(heap.isHeap()).isTrue();
+                assertThat(heap2.isHeap()).isTrue();
+            }
+        }
     }
 
 }
