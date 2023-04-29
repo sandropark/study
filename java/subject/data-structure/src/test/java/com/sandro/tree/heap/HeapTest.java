@@ -71,4 +71,19 @@ class HeapTest {
         }
     }
 
+    @DisplayName("insert 메서드는 힙에 요소를 추가하면서 자동으로 힙 성질을 만족하게 한다.")
+    @Test
+    void insert() throws Exception {
+        Heap heap = Heap.of(10, 1, 2);
+        Heap heap2 = Heap.of(15, 12, 6, 11, 10, 2, 3, 1, 8);
+
+        heap.insert(5);
+        heap2.insert(14);
+
+        assertThat(heap.isHeap()).isTrue();
+        assertThat(heap2.isHeap()).isTrue();
+
+        heap.print();
+        heap2.print();
+    }
 }

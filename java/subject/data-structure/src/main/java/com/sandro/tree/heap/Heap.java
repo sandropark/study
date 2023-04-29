@@ -51,8 +51,10 @@ public class Heap {
 
             Node maxChild = max(leftNode, rightNode);
 
-            if (tempNode.smallerThan(maxChild))
-                heapifyDown(swap(tempNode, maxChild));
+            if (tempNode.smallerThan(maxChild)) {
+                swap(tempNode, maxChild);
+                heapifyDown(maxChild.getIndex());
+            }
         }
     }
 
@@ -92,12 +94,41 @@ public class Heap {
                 : node2;
     }
 
-    private int swap(Node tempNode, Node maxChild) {
-        list.set(tempNode.getIndex(), maxChild.getValue());
-        list.set(maxChild.getIndex(), tempNode.getValue());
-        return maxChild.getIndex();
+    private void swap(Node tempNode, Node target) {
+        list.set(tempNode.getIndex(), target.getValue());
+        list.set(target.getIndex(), tempNode.getValue());
     }
 
+    public void insert(int value) {
+        list.add(value);
+        int lastIndex = list.size() - 1;
+        heapifyUp(lastIndex);
+    }
+
+    private void heapifyUp(int index) {
+        if (hasParent(index)) {
+            Node tempNode = getTempNode(index);
+            Node parent = getParent(index);
+            if (parent.smallerThan(tempNode)) {
+                swap(tempNode, parent);
+                heapifyUp(parent.getIndex());
+            }
+        }
+    }
+
+    private Node getParent(int i) {
+        int parentIndex = (i - 1) / 2;
+        return Node.of(list.get(parentIndex), parentIndex);
+    }
+
+    private boolean hasParent(int i) {
+        int parentIndex = (i - 1) / 2;
+        return parentIndex >= 0;
+    }
+
+    public void print() {
+        System.out.println(list);
+    }
 }
 
 @Getter
@@ -110,7 +141,7 @@ class Node {
         return new Node(value, index);
     }
 
-    public boolean smallerThan(Node maxChild) {
-        return value < maxChild.getValue();
+    public boolean smallerThan(Node target) {
+        return value < target.getValue();
     }
 }
