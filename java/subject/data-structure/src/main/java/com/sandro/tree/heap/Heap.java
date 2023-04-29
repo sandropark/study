@@ -6,11 +6,27 @@ import lombok.Getter;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Heap {
     private final List<Integer> list;
+
+    @Getter
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    private static class Node {
+        private int value;
+        private int index;
+
+        public static Node of(int value, int index) {
+            return new Node(value, index);
+        }
+
+        public boolean smallerThan(Node target) {
+            return value < target.getValue();
+        }
+    }
 
     public static Heap of(int... values) {
         return new Heap(Arrays.stream(values).boxed().collect(Collectors.toList()));
@@ -22,6 +38,26 @@ public class Heap {
             if (hasGreaterChild(i))
                 return false;
         return true;
+    }
+
+    public void makeHeap() {
+        for (int i = list.size() - 1; i >= 0; i--)
+            heapifyDown(i);
+    }
+
+    public void insert(int value) {
+        list.add(value);
+        int lastIndex = list.size() - 1;
+        heapifyUp(lastIndex);
+    }
+
+    public int findMax() {
+        return list.get(0);
+    }
+
+    public void deleteMax() {
+        moveLastToFirst();
+        heapifyDown(0);
     }
 
     private boolean hasGreaterChild(int i) {
@@ -38,19 +74,13 @@ public class Heap {
         return false;
     }
 
-    public void makeHeap() {
-        for (int i = list.size() - 1; i >= 0; i--)
-            heapifyDown(i);
-    }
-
     private void heapifyDown(int i) {
-        if (isNotLeaf(i)) {
+        if (hasLeft(i)) {
             Node tempNode = getTempNode(i);
             Node leftNode = getLeftNode(i);
-            Node rightNode = getRightNode(i);
-
-            Node maxChild = max(leftNode, rightNode);
-
+            Node maxChild = leftNode;
+            if (hasRight(i))
+                maxChild = max(leftNode, getRightNode(i));
             if (tempNode.smallerThan(maxChild)) {
                 swap(tempNode, maxChild);
                 heapifyDown(maxChild.getIndex());
@@ -68,10 +98,6 @@ public class Heap {
         int leftIndex = i * 2 + 1;
         int lastIndexOfList = list.size() - 1;
         return leftIndex <= lastIndexOfList;
-    }
-
-    private boolean isNotLeaf(int i) {
-        return hasLeft(i);
     }
 
     private Node getTempNode(int i) {
@@ -99,12 +125,6 @@ public class Heap {
         list.set(target.getIndex(), tempNode.getValue());
     }
 
-    public void insert(int value) {
-        list.add(value);
-        int lastIndex = list.size() - 1;
-        heapifyUp(lastIndex);
-    }
-
     private void heapifyUp(int index) {
         if (hasParent(index)) {
             Node tempNode = getTempNode(index);
@@ -126,22 +146,27 @@ public class Heap {
         return parentIndex >= 0;
     }
 
-    public void print() {
-        System.out.println(list);
-    }
-}
-
-@Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-class Node {
-    private int value;
-    private int index;
-
-    public static Node of(int value, int index) {
-        return new Node(value, index);
+    private void moveLastToFirst() {
+        Integer last = list.get(list.size() - 1);
+        list.set(0, last);
+        list.remove(list.size() - 1);
     }
 
-    public boolean smallerThan(Node target) {
-        return value < target.getValue();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Heap heap = (Heap) o;
+        return Objects.equals(list, heap.list);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(list);
+    }
+
+    @Override
+    public String toString() {
+        return list.toString();
     }
 }

@@ -81,9 +81,33 @@ class HeapTest {
         heap2.insert(14);
 
         assertThat(heap.isHeap()).isTrue();
+        assertThat(heap).isEqualTo(Heap.of(10, 5, 2, 1));
         assertThat(heap2.isHeap()).isTrue();
+        assertThat(heap2).isEqualTo(Heap.of(15, 14, 6, 11, 12, 2, 3, 1, 8, 10));
+    }
 
-        heap.print();
-        heap2.print();
+    @DisplayName("findMax 메서드는 힙에서 가장 큰 값을 반환한다.")
+    @Test
+    void findMax() throws Exception {
+        Heap heap = Heap.of(10, 1, 2);
+
+        int max = heap.findMax();
+
+        assertThat(max).isEqualTo(10);
+    }
+
+    @DisplayName("deleteMax 메서드는 힙에서 가장 큰 값을 삭제하고 남은 요소를 힙으로 만든다.")
+    @Test
+    void deleteMax() throws Exception {
+        Heap heap = Heap.of(10, 3, 4, 1, 2);
+        Heap heap2 = Heap.of(15, 12, 6, 11, 10, 2, 3, 1, 8);
+
+        heap.deleteMax();
+        heap2.deleteMax();
+
+        assertThat(heap.isHeap()).isTrue();
+        assertThat(heap2.isHeap()).isTrue();
+        assertThat(heap).isEqualTo(Heap.of(4, 3, 2, 1));
+        assertThat(heap2).isEqualTo(Heap.of(12, 11, 6, 8, 10, 2, 3, 1));
     }
 }
