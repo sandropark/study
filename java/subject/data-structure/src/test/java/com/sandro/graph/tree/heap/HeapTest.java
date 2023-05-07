@@ -1,5 +1,6 @@
-package com.sandro.tree.heap;
+package com.sandro.graph.tree.heap;
 
+import com.sandro.graph.tree.heap.Heap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

@@ -1,4 +1,4 @@
-package com.sandro.tree;
+package com.sandro.graph.DFS;
 
 import lombok.Getter;
 import lombok.Setter;

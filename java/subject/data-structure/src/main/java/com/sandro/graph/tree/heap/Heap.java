@@ -1,4 +1,4 @@
-package com.sandro.tree.heap;
+package com.sandro.graph.tree.heap;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

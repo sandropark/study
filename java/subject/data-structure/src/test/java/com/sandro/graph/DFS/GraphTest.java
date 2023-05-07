@@ -1,4 +1,4 @@
-package com.sandro.tree;
+package com.sandro.graph.DFS;
 
 import org.junit.jupiter.api.Test;
 
