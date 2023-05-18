@@ -3,9 +3,7 @@ package com.sandro.springbatch.job;
 import com.sandro.springbatch.BatchTestConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.batch.core.JobParameter;
-import org.springframework.batch.core.JobParameters;
-import org.springframework.batch.core.JobParametersInvalidException;
+import org.springframework.batch.core.*;
 import org.springframework.batch.test.JobLauncherTestUtils;
 import org.springframework.batch.test.context.SpringBatchTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ActiveProfiles("test")
@@ -34,6 +33,16 @@ class AdvancedJopConfigTest {
         assertThatThrownBy(() -> jobLauncherTestUtils.launchJob(jobParameters))
                 .isInstanceOf(JobParametersInvalidException.class)
                 .message().contains("유효하지 않은 날짜");
+    }
+
+    @DisplayName("jobExecutionStatus 확인")
+    @Test
+    void status() throws Exception {
+        JobParameters jobParameters = new JobParameters(Map.of("targetDate", new JobParameter("2021-01-01")));
+
+        JobExecution execution = jobLauncherTestUtils.launchJob(jobParameters);
+
+        assertThat(execution.getExitStatus().getExitCode()).isEqualTo(ExitStatus.FAILED.getExitCode());
     }
 
 }
