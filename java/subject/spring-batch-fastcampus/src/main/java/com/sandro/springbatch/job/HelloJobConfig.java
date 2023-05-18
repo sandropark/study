@@ -13,8 +13,8 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
 @RequiredArgsConstructor
+@Configuration
 public class HelloJobConfig {
 
     private final JobBuilderFactory jobBuilderFactory;
@@ -39,9 +39,9 @@ public class HelloJobConfig {
     @StepScope
     @Bean
     public Tasklet tasklet() {
-        return (((contribution, chunkContext) -> {
+        return ((contribution, chunkContext) -> {
             System.out.println("Hello Spring Batch");
             return RepeatStatus.FINISHED;
-        }));
+        });
     }
 }

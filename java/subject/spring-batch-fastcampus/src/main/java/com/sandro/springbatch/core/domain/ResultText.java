@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Getter
 @DynamicUpdate
 @Entity
-public class PlainText {
+public class ResultText {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,9 +16,9 @@ public class PlainText {
     @Column(nullable = false)
     private String text;
 
-    protected PlainText() {}
+    protected ResultText() {}
 
-    public PlainText(String text) {
+    public ResultText(String text) {
         this.text = text;
     }
 }

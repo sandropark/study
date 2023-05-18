@@ -4,6 +4,7 @@ spring:
   batch:
     job:
       names: ${job.name:NONE}
+  output.ansi.enabled: always
 
 ---
 
@@ -24,3 +25,12 @@ spring:
     jdbc:
       initialize-schema: always
       isolation-level-for-create: default
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: test
+  jpa:
+    database: h2

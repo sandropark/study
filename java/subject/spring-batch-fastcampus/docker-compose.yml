@@ -5,10 +5,10 @@ services:
     container_name: mysql_house
     image: mysql/mysql-server:5.7
     environment:
-      MYSQL_ROOT_HOST:
-      MYSQL_USER:
-      MYSQL_PASSWORD:
-      MYSQL_DATABASE:
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_USER: "house"
+      MYSQL_PASSWORD: "house"
+      MYSQL_DATABASE: "house"
     ports:
       - "3306:3306"
     command:
