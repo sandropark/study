@@ -1,8 +1,14 @@
 package com.sandro.springbatch.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
+@Builder
 public class PlayerDto {
     private String ID;
     private String lastName;
