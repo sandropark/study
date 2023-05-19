@@ -35,14 +35,22 @@ class AdvancedJopConfigTest {
                 .message().contains("유효하지 않은 날짜");
     }
 
-    @DisplayName("jobExecutionStatus 확인")
+    @DisplayName("jobExecutionListener")
     @Test
-    void status() throws Exception {
+    void jobExecutionListener() throws Exception {
         JobParameters jobParameters = new JobParameters(Map.of("targetDate", new JobParameter("2021-01-01")));
 
         JobExecution execution = jobLauncherTestUtils.launchJob(jobParameters);
 
         assertThat(execution.getExitStatus().getExitCode()).isEqualTo(ExitStatus.FAILED.getExitCode());
+    }
+
+    @DisplayName("StepExecutionListener")
+    @Test
+    void stepExecutionListener() throws Exception {
+        JobParameters jobParameters = new JobParameters(Map.of("targetDate", new JobParameter("2021-01-02")));
+
+        JobExecution execution = jobLauncherTestUtils.launchJob(jobParameters);
     }
 
 }

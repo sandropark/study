@@ -26,7 +26,8 @@ public class AdvancedJopConfig {
     private final String parameterName = "targetDate";
 
     @Bean
-    public Job advancedJob(JobExecutionListener jobExecutionListener, Step advancedStep) {
+    public Job advancedJob(JobExecutionListener jobExecutionListener,
+                           Step advancedStep) {
         return jobBuilderFactory.get("advancedJob")
                 .incrementer(new RunIdIncrementer())
                 .validator(new LocalDateParameterValidator(parameterName))
@@ -46,19 +47,37 @@ public class AdvancedJopConfig {
 
             @Override
             public void afterJob(JobExecution jobExecution) {
-//                log.info("[JobExecutionListener#afterJob] jobExecution is {}", jobExecution.getStatus());
-                if (jobExecution.getStatus() == BatchStatus.FAILED) // 상태에 따라서 원하는 작업을 수행할 수 있다.
-                    log.error("[JobExecutionListener#afterJob] jobExecution is Failed");
+                log.info("[JobExecutionListener#afterJob] jobExecution is {}", jobExecution.getStatus());
+                if (jobExecution.getStatus() == BatchStatus.FAILED) {}// 상태에 따라서 원하는 작업을 수행할 수 있다.
             }
         };
     }
 
     @JobScope
     @Bean
-    public Step advancedStep(Tasklet advancedTasklet) {
+    public Step advancedStep(StepExecutionListener stepExecutionListener,
+                             Tasklet advancedTasklet) {
         return stepBuilderFactory.get("advancedStep")
                 .tasklet(advancedTasklet)
+                .listener(stepExecutionListener)
                 .build();
+    }
+
+    @StepScope
+    @Bean
+    public StepExecutionListener stepExecutionListener() {
+        return new StepExecutionListener() {
+            @Override
+            public void beforeStep(StepExecution stepExecution) {
+                log.info("[StepExecutionListener#beforeStep] stepExecution is {}", stepExecution.getStatus());
+            }
+
+            @Override
+            public ExitStatus afterStep(StepExecution stepExecution) {
+                log.info("[StepExecutionListener#afterStep] stepExecution is {}", stepExecution.getStatus());
+                return stepExecution.getExitStatus();
+            }
+        };
     }
 
 
